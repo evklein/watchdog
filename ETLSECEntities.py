@@ -4,16 +4,17 @@ import sqlite3
 import time
 
 EDGAR_DB_CONNECTION_STR = os.path.expanduser(os.environ.get('WATCHDOG_EDGAR_DB_LOC'))
-print(f'DB Connection string: {EDGAR_DB_CONNECTION_STR}')
 HEADERS = {
     'User-Agent': 'Evan Klein (Indiana University) evklein@iu.edu',
     'Accept': 'application/json',
     'Accept-Encoding': 'gzip, deflate, br',
     'Referer': 'https://www.sec.gov'
 }
+REQ_LIMIT_PER_SEC = 7 # Timing fun - SEC asks for no more than 10 req/sec.
+REQ_LIMIT_PAUSE_INTERVAL = 1500 # milliseconds
 
 ## Make database connections
-sqliteConnection = sqlite3.connect(EDGAR_DB_CONNECTION_STR)
+sql_connection = sqlite3.connect(EDGAR_DB_CONNECTION_STR)
 cursor = sqliteConnection.cursor()
 
 ## Get CIKs from database
@@ -38,16 +39,29 @@ UPDATE SECEntity SET
 WHERE CIK = '{cik}';
     '''
     cursor.execute(update_entity_row_command)
-    sqliteConnection.commit()
-    
+    sql_connection.commit()
 
-    if i % 10 == 0: # Timing fun - SEC asks for no more than 10 req/sec.
-        time.sleep(1)
+    # Compile filing IDs
+    recent_filings = edgar_res['filings']['recent']
+    nport_filing_ids = [
+        filing[0].replace('-', '')
+        for _, filing in enumerate(
+            zip(recent_filings['accessionNumber'], recent_filings['form'])
+        ) if filing[1] == 'NPORT-P'
+    ]
+
+    for j, filing_id in enumerate(nport_filing_ids):
+        import_filing(sql_connection, cik, filing_id)
+        pause_comply(j)
+
+    pause_comply(i)
+
+
 
 ## Terminate database connection
 cursor.close()
 
-def import_filing(cik, filing_id):
+def import_filing(sql_connection, cik, filing_id):
     req_url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{filing_id}/primary_doc.xml'
     nport_req = requests.get(req_url, headers = HEADERS)
     nport_xml = BeautifulSoup(nport_req.text, 'xml')
@@ -57,9 +71,20 @@ def import_filing(cik, filing_id):
     
     # Save series details, if none exists
     save_series_query = f'''
-INSERT Series (
-    '''
+REPLACE INTO SeriesClasses VALUES
+(
+    {nport_xml.find('seriesId')}-{nport_xml.find('classId')},
+    {nport_xml.find('seriesId')},
+    {nport_xml.find('classId')}
+    {nport_xml.find('seriesName')}
+);'''
+    cursor.execute(save_series_query)
+    sql_connection.commit()
 
     # Save filing details
 
     # Save holding details
+
+def pause_comply(nth):
+    if nth % REQ_LIMIT_PER_SEC == 0:
+        time.sleep(REQ_LIMIT_PAUSE_INTERVAL)
