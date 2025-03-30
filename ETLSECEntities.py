@@ -50,6 +50,7 @@ WHERE CIK = '{cik}';
         ) if filing[1] == 'NPORT-P'
     ]
 
+    print(f'{len(nport_filing_ids)} NPORT-P filings found, initiating per-filing scrape(s).')
     for j, filing_id in enumerate(nport_filing_ids):
         import_filing(sql_connection, cik, filing_id)
         pause_comply(j)
@@ -62,6 +63,7 @@ WHERE CIK = '{cik}';
 cursor.close()
 
 def import_filing(sql_connection, cik, filing_id):
+    print(f'Scraping NPORT-P Filing {filing_id} for CIK {cik}.')
     req_url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{filing_id}/primary_doc.xml'
     nport_req = requests.get(req_url, headers = HEADERS)
     nport_xml = BeautifulSoup(nport_req.text, 'xml')
