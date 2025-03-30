@@ -11,15 +11,13 @@ YEAR_LIMIT_PER_REQ = 10
 def ExtractCPIData():
     for i in range(START_YEAR, END_YEAR, YEAR_LIMIT_PER_REQ): # Limit to 10 years - BLS API won't return more than 10 years at a time, so we break up the requests.
         chunk_start = i
-        chunk_end = min(i + YEAR_LIMIT_PER_REQ, YEAR_LIMIT_PER_REQ)
-        req_url = f'https://api.bls.gov/publicAPI/v2/timeseries/data/{SERIES_ID}?start_year={chunk_start}&end_year={chunk_end}'
-        print(req_url)
+        chunk_end = min(i + YEAR_LIMIT_PER_REQ, END_YEAR)
+        req_url = f'https://api.bls.gov/publicAPI/v2/timeseries/data/{SERIES_ID}?startyear={chunk_start}&endyear={chunk_end}'
         bls_req = requests.get(req_url)
-        print(bls_req.status_code)
         if bls_req.status_code == 200:
             cpi_data_by_month = bls_req.json()['Results']['series'][0]['data']
             for cpi_recording in cpi_data_by_month:
                 print(f'{cpi_recording["periodName"]} {cpi_recording["year"]}: {cpi_recording["value"]}')
 
-if __name__ == 'main':
+if __name__ == '__main__':
     ExtractCPIData()
