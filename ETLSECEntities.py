@@ -56,7 +56,8 @@ REPLACE INTO NPORTFilings VALUES
     print(f'Scraping and loading {len(holdings)} holding(s).')
     for holding in holdings:
         save_holding_query = f'''
-REPLACE INTO FundHoldings(
+INSERT INTO FundHoldings (LEI, SecurityName, SecurityTitle, Balance, ValueUSD, PercentOfHoldings, AssetCategory, NPORTFilingId)
+(
     "{holding.find('lei').string}",
     "{holding.find('name').string}",
     "{holding.find('title').string}",
