@@ -45,9 +45,10 @@ REPLACE INTO NPORTFilings VALUES
     "{cik}",
     "{series_composite_key}",
     "{nport_xml.find('repPdEnd').string}",
-    "{float(nport_xml.find('totalAssets').string)}",
-    "{float(nport_xml.find('totalLiabs').string)}
+    {float(nport_xml.find('totalAssets').string)},
+    {float(nport_xml.find('totalLiabs').string)}
 );'''
+    print()
     cursor.execute(save_filing_query)
     sql_connection.commit()
 
