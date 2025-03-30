@@ -16,7 +16,6 @@ REQ_LIMIT_PAUSE_INTERVAL = 1.5 # In seconds
 
 
 def import_filing(sql_connection, cik, filing_id):
-    print(f'Scraping NPORT-P Filing {filing_id} for CIK {cik}.')
     req_url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{filing_id}/primary_doc.xml'
     nport_req = requests.get(req_url, headers = HEADERS)
     nport_xml = BeautifulSoup(nport_req.text, 'xml')
@@ -25,10 +24,11 @@ def import_filing(sql_connection, cik, filing_id):
     holdings = nport_xml.find_all('invstOrSec')
     
     # Save series details, if none exists
+    series_composite_key = f'{nport_xml.find('seriesId').string}-{nport_xml.find('classId').string}'
     save_series_query = f'''
 REPLACE INTO SeriesClasses VALUES
 (
-    "{nport_xml.find('seriesId').string}-{nport_xml.find('classId').string}",
+    "{series_composite_key}",
     "{nport_xml.find('seriesId').string}",
     "{nport_xml.find('classId').string}",
     "{nport_xml.find('seriesName').string}"
@@ -38,6 +38,18 @@ REPLACE INTO SeriesClasses VALUES
     sql_connection.commit()
 
     # Save filing details
+    save_filing_query = f'''
+REPLACE INTO NPORTFilings VALUES
+(
+    "{filing_id}",
+    "{cik}",
+    "{series_composite_key}",
+    "{nport_xml.find('repPdEnd').string}",
+    "{float(nport_xml.find('totalAssets').string)}",
+    "{float(nport_xml.find('totalLiabs').string)}
+);'''
+    cursor.execute(save_filing_query)
+    sql_connection.commit()
 
     # Save holding details
 
