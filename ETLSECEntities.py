@@ -24,7 +24,7 @@ def import_filing(sql_connection, cik, filing_id):
     holdings = nport_xml.find_all('invstOrSec')
     
     # Save series details, if none exists
-    series_composite_key = f'{nport_xml.find('seriesId').string}-{nport_xml.find('classId').string}'
+    series_composite_key = f'{nport_xml.find("seriesId").string}-{nport_xml.find("classId").string}'
     save_series_query = f'''
 REPLACE INTO SeriesClasses VALUES
 (
