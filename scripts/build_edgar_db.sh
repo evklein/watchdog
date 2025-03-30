@@ -1,8 +1,22 @@
 #!/bin/bash
 
-edgar_db = $WATCHDOG_EDGAR_DB_DIR
+edgar_db=${WATCHDOG_EDGAR_DB_LOC/#\~/$HOME}
 echo "Building database at location $edgar_db"
 
-rm $edgar_db_var
-sqlite3 $edgar_db
-sqlite3 $edgar_db < ../sql/CreateTablesecEntities
+if [ -f "$edgar_db" ]; then
+	rm "$edgar_db"
+	echo "Database removed. Cleared to rebuild from scatch."
+else
+	echo "Warning: $edgar_db does not exist, nothing to remove"
+fi
+
+echo "Creating Table - SECEntities"
+sqlite3 $edgar_db < sql/CreateTableSECEntities.sql
+
+echo "Creating Table - SeriesClasses"
+sqlite3 $edgar_db < sql/CreateTableSeriesClasses.sql
+
+echo "Creating Table - NPORTFilings"
+sqlite3 $edgar_db < sql/CreateTableNPORTFilings.sql
+
+echo "Database successfully created at location $edgar_db"

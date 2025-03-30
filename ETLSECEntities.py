@@ -3,7 +3,7 @@ import os
 import sqlite3
 import time
 
-EDGAR_DB_CONNECTION_STR = os.path.expanduser(os.environ.get('WATCHDOG_EDGAR_DB_DIR'))
+EDGAR_DB_CONNECTION_STR = os.path.expanduser(os.environ.get('WATCHDOG_EDGAR_DB_LOC'))
 print(f'DB Connection string: {EDGAR_DB_CONNECTION_STR}')
 HEADERS = {
     'User-Agent': 'Evan Klein (Indiana University) evklein@iu.edu',
@@ -17,7 +17,7 @@ sqliteConnection = sqlite3.connect(EDGAR_DB_CONNECTION_STR)
 cursor = sqliteConnection.cursor()
 
 ## Get CIKs from database
-retrieve_cik_command = 'SELECT CIK FROM SECEntity'
+retrieve_cik_command = 'SELECT CIK FROM SECEntities'
 cursor.execute(retrieve_cik_command)
 ciks_raw = cursor.fetchall()
 ciks = [cik_obj[0] for cik_obj in ciks_raw]
