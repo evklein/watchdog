@@ -15,7 +15,7 @@ REQ_LIMIT_PAUSE_INTERVAL = 1500 # milliseconds
 
 ## Make database connections
 sql_connection = sqlite3.connect(EDGAR_DB_CONNECTION_STR)
-cursor = sqliteConnection.cursor()
+cursor = sqlite_connection.cursor()
 
 ## Get CIKs from database
 retrieve_cik_command = 'SELECT CIK FROM SECEntities'
