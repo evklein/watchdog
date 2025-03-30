@@ -48,11 +48,27 @@ REPLACE INTO NPORTFilings VALUES
     {float(nport_xml.find('totAssets').string)},
     {float(nport_xml.find('totLiabs').string)}
 );'''
-    print(save_filing_query)
     cursor.execute(save_filing_query)
     sql_connection.commit()
 
     # Save holding details
+    holdings = nport_xml.find_all('invstOrSec')
+    print(f'Scraping and loading {len(holdings)} holding(s).')
+    for holding in holdings:
+        save_holding_query = f'''
+REPLACE INTO FundHoldings(
+    "{holding.find('lei').string}",
+    "{holding.find('name').string}",
+    "{holding.find('title').string}",
+    {float(holding.find('balance').string)},
+    {float(holding.find('valUSD').string)},
+    {float(holding.find('pctVal').string)},
+    "{holding.find('assetCat').string}",
+    "{filing_id}"
+);'''
+        print(save_holding_query)
+        cursor.execute(save_holding_query)
+    sql_connection.commit()
 
 def pause_comply(nth):
     if nth % REQ_LIMIT_PER_SEC == 0:
