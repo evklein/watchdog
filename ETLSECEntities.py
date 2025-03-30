@@ -29,7 +29,7 @@ for i, cik in enumerate(ciks):
     edgar_req = requests.get(req_url, headers = HEADERS)
     edgar_res = edgar_req.json()
     update_entity_row_command = f'''
-UPDATE SECEntity SET
+UPDATE SECEntities SET
     Name = '{edgar_res["name"]}',
     EntityType = '{edgar_res["entityType"]}',
     IncorporationState = '{edgar_res["stateOfIncorporation"]}',
