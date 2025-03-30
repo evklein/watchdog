@@ -30,9 +30,10 @@ REPLACE INTO SeriesClasses VALUES
 (
     {nport_xml.find('seriesId')}-{nport_xml.find('classId')},
     {nport_xml.find('seriesId')},
-    {nport_xml.find('classId')}
+    {nport_xml.find('classId')},
     {nport_xml.find('seriesName')}
 );'''
+    print(save_series_query)
     cursor.execute(save_series_query)
     sql_connection.commit()
 
