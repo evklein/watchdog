@@ -57,7 +57,7 @@ REPLACE INTO NPORTFilings VALUES
     for holding in holdings:
         save_holding_query = f'''
 INSERT INTO FundHoldings (LEI, SecurityName, SecurityTitle, Balance, ValueUSD, PercentOfHoldings, AssetCategory, NPORTFilingId)
-(
+VALUES (
     "{holding.find('lei').string}",
     "{holding.find('name').string}",
     "{holding.find('title').string}",
