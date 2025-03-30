@@ -24,9 +24,10 @@ ciks = [cik_obj[0] for cik_obj in ciks_raw]
 
 ## Grab JSON from EDGAR - pull out what we need an insert it into table
 for i, cik in enumerate(ciks):
-    edgar_req = requests.get(f'https://data.sec.gov/submissions/CIK{cik}.json', headers = HEADERS)
+    ### Grab and store entity details
+    req_url = f'https://data.sec.gov/submissions/CIK{cik}.json'
+    edgar_req = requests.get(req_url, headers = HEADERS)
     edgar_res = edgar_req.json()
-    print(edgar_res['name'])
     update_entity_row_command = f'''
 UPDATE SECEntity SET
     Name = '{edgar_res["name"]}',
@@ -36,11 +37,29 @@ UPDATE SECEntity SET
     Address = '{edgar_res["addresses"]["business"]["street1"]}'
 WHERE CIK = '{cik}';
     '''
-    print(update_entity_row_command)
     cursor.execute(update_entity_row_command)
     sqliteConnection.commit()
+    
+
     if i % 10 == 0: # Timing fun - SEC asks for no more than 10 req/sec.
         time.sleep(1)
 
 ## Terminate database connection
 cursor.close()
+
+def import_filing(cik, filing_id):
+    req_url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{filing_id}/primary_doc.xml'
+    nport_req = requests.get(req_url, headers = HEADERS)
+    nport_xml = BeautifulSoup(nport_req.text, 'xml')
+
+    general_info = nport_xml.find('genInfo')
+    holdings = nport_xml.find_all('invstOrSec')
+    
+    # Save series details, if none exists
+    save_series_query = f'''
+INSERT Series (
+    '''
+
+    # Save filing details
+
+    # Save holding details
