@@ -11,8 +11,8 @@ HEADERS = {
     'Accept-Encoding': 'gzip, deflate, br',
     'Referer': 'https://www.sec.gov'
 }
-REQ_LIMIT_PER_SEC = 7 # Timing fun - SEC asks for no more than 10 req/sec.
-REQ_LIMIT_PAUSE_INTERVAL = 1.5 # In seconds
+REQ_LIMIT_PER_SEC = 9 # Timing fun - SEC asks for no more than 10 req/sec.
+REQ_LIMIT_PAUSE_INTERVAL = 1 # In seconds
 
 
 def import_filing(sql_connection, cik, filing_id):
@@ -33,7 +33,6 @@ REPLACE INTO SeriesClasses VALUES
     "{nport_xml.find('classId').string}",
     "{nport_xml.find('seriesName').string}"
 );'''
-    print(save_series_query)
     cursor.execute(save_series_query)
     sql_connection.commit()
 
@@ -67,7 +66,6 @@ VALUES (
     "{holding.find('assetCat').string if holding.find('assetCat') is not None else ''}",
     "{filing_id}"
 );'''
-        print(save_holding_query)
         cursor.execute(save_holding_query)
     sql_connection.commit()
 
