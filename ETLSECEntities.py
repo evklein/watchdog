@@ -2,6 +2,7 @@ import requests
 import os
 import sqlite3
 import time
+from bs4 import BeautifulSoup
 
 EDGAR_DB_CONNECTION_STR = os.path.expanduser(os.environ.get('WATCHDOG_EDGAR_DB_LOC'))
 HEADERS = {
@@ -79,8 +80,6 @@ WHERE CIK = '{cik}';
             zip(recent_filings['accessionNumber'], recent_filings['form'])
         ) if filing[1] == 'NPORT-P'
     ]
-
-    print(recent_filings)
 
     print(f'{len(nport_filing_ids)} NPORT-P filings found, initiating per-filing scrape(s).')
     for j, filing_id in enumerate(nport_filing_ids):
