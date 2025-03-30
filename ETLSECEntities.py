@@ -11,7 +11,7 @@ HEADERS = {
     'Referer': 'https://www.sec.gov'
 }
 REQ_LIMIT_PER_SEC = 7 # Timing fun - SEC asks for no more than 10 req/sec.
-REQ_LIMIT_PAUSE_INTERVAL = 1500 # milliseconds
+REQ_LIMIT_PAUSE_INTERVAL = 1.5 # In seconds
 
 
 def import_filing(sql_connection, cik, filing_id):
@@ -79,6 +79,8 @@ WHERE CIK = '{cik}';
             zip(recent_filings['accessionNumber'], recent_filings['form'])
         ) if filing[1] == 'NPORT-P'
     ]
+
+    print(recent_filings)
 
     print(f'{len(nport_filing_ids)} NPORT-P filings found, initiating per-filing scrape(s).')
     for j, filing_id in enumerate(nport_filing_ids):
