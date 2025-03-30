@@ -11,7 +11,7 @@ HEADERS = {
     'Accept-Encoding': 'gzip, deflate, br',
     'Referer': 'https://www.sec.gov'
 }
-REQ_LIMIT_PER_SEC = 9 # Timing fun - SEC asks for no more than 10 req/sec.
+REQ_LIMIT_PER_SEC = 6 # Timing fun - SEC asks for no more than 10 req/sec.
 REQ_LIMIT_PAUSE_INTERVAL = 1 # In seconds
 
 
@@ -112,6 +112,7 @@ WHERE CIK = '{cik}';
 
     print(f'{len(nport_filing_ids)} NPORT-P filings found, initiating per-filing scrape(s).')
     for j, filing_id in enumerate(nport_filing_ids):
+        print(f'Importing Filing - {filing_id} for entity {edgar_res["name"]}')
         import_filing(sql_connection, cik, filing_id)
         pause_comply(j)
 
