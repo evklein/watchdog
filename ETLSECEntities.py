@@ -28,10 +28,10 @@ def import_filing(sql_connection, cik, filing_id):
     save_series_query = f'''
 REPLACE INTO SeriesClasses VALUES
 (
-    {nport_xml.find('seriesId')}-{nport_xml.find('classId')},
-    {nport_xml.find('seriesId')},
-    {nport_xml.find('classId')},
-    {nport_xml.find('seriesName')}
+    {nport_xml.find('seriesId').string}-{nport_xml.find('classId').string},
+    {nport_xml.find('seriesId').string},
+    {nport_xml.find('classId').string},
+    {nport_xml.find('seriesName').string}
 );'''
     print(save_series_query)
     cursor.execute(save_series_query)
