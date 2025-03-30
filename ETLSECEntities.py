@@ -64,7 +64,7 @@ VALUES (
     {float(holding.find('balance').string)},
     {float(holding.find('valUSD').string)},
     {float(holding.find('pctVal').string)},
-    "{holding.find('assetCat').string}",
+    "{holding.find('assetCat').string if holding.find('assetCat') is not None else ''}",
     "{filing_id}"
 );'''
         print(save_holding_query)
