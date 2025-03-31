@@ -12,8 +12,6 @@ START_YEAR = 1960
 END_YEAR = datetime.now().year
 YEAR_LIMIT_PER_REQ = 10
 
-ConsumerPriceIndexRecord = namedtuple('ConsumerPriceIndexRecord', ['date', 'cpi'])
-
 def ExtractCPIData():
     print('Extracting CPI Data from BLS')
     aggregated_cpi_records = []
@@ -30,12 +28,11 @@ def ExtractCPIData():
 
 def TransformCPIData(aggregated_data):
     print('Transforming CPI data.')
-    print(aggregated_data)
     return [
-        ConsumerPriceIndexRecord(
-            datetime.strptime(f'{record["year"]}-{record["period"][1:]}-15', '%Y-%m-%d'),
-            float(record['value'])
-        )
+        {
+            'date_recorded_by': datetime.strptime(f'{record["year"]}-{record["period"][1:]}-15', '%Y-%m-%d'),
+            'cpi': float(record['value'])
+        }
         for record in aggregated_data
     ]
 
