@@ -7,7 +7,7 @@ from collections import namedtuple
 BLS_API_KEY = os.environ.get('WATCHDOG_BLS_API_KEY')
 MONGO_HOST = os.environ.get('WATCHDOG_MONGO_DB_HOST')
 MONGO_PORT = int(os.environ.get('WATCHDOG_MONGO_DB_PORT'))
-SERIES_ID = 'CUUR0000SA0'
+SERIES_ID = 'APU0000708111'
 START_YEAR = 1960
 END_YEAR = datetime.now().year
 YEAR_LIMIT_PER_REQ = 10
