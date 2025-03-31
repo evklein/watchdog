@@ -25,7 +25,7 @@ for i in range(1, 50):
 
     r = requests.get(url, headers = HEADERS)
     data = r.json()
-    recent_filings = r['filings']['recent']
+    recent_filings = data['filings']['recent']
     filings_with_type = zip(recent_filings['accessionNumber'], recent_filings['form'])
     nq = [filing for filing in filing_with_type if filing[1] == 'N-Q']
     print(nq)
