@@ -16,8 +16,7 @@ HEADERS = {
 # ('0001331875'),
 # ('0000036405')
 
-num_raw = str(i)
-num = num_raw.rjust(3, '0')
+
 url = f'https://data.sec.gov/submissions/CIK0000906352.json'
 
 r = requests.get(url, headers = HEADERS)
