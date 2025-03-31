@@ -23,5 +23,5 @@ r = requests.get(url, headers = HEADERS)
 data = r.json()
 recent_filings = data['filings']['recent']
 filings_with_type = zip(recent_filings['accessionNumber'], recent_filings['form'])
-nq = [filing for filing in filings_with_type if filing[1] == 'N-PORT']
+nq = [filing for filing in filings_with_type if filing[1] == 'NPORT-P']
 print(nq)
