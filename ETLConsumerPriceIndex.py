@@ -24,7 +24,7 @@ def ExtractCPIData():
         bls_req = requests.get(req_url)
         if bls_req.status_code == 200:
             cpi_data_by_month = bls_req.json()['Results']['series'][0]['data']
-            aggregated_cpi_records.append(cpi_data_by_month)
+            aggregated_cpi_records.extend(cpi_data_by_month)
     print(f'CPI data extracted. {len(aggregated_cpi_records)} months worth of data found.')
     return aggregated_cpi_records
 
