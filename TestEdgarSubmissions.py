@@ -12,6 +12,5 @@ for i in range(1, 41):
     num = num_raw.rjust(3, '0')
     url = f'https://data.sec.gov/submissions/CIK0000886982-submissions-{num}.json'
     r = requests.get(url, headers = HEADERS)
-    print(r.text)
     if r.text.find('NPORT-P') != -1:
         print(i)
