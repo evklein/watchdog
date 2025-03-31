@@ -27,5 +27,5 @@ for i in range(1, 50):
     data = r.json()
     recent_filings = data['filings']['recent']
     filings_with_type = zip(recent_filings['accessionNumber'], recent_filings['form'])
-    nq = [filing for filing in filings_with_type if filing[1] == 'N-Q']
+    nq = [filing for filing in filings_with_type if filing[1] == 'N-CEN']
     print(nq)
