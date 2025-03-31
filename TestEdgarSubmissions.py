@@ -24,5 +24,5 @@ for i in range(1, 100):
     url = f'https://data.sec.gov/submissions/CIK0001331875-submissions-{num}.json'
     print(url)
     r = requests.get(url, headers = HEADERS)
-    if r.text.find('NPORT-P') != -1:
+    if r.text.find('NPO') != -1:
         print(i)
