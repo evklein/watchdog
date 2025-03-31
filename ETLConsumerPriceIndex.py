@@ -32,7 +32,7 @@ def TransformCPIData(aggregated_data):
     print('Transforming CPI data.')
     return [
         ConsumperPriceIndexRecord(
-            datetime.strptime(f'{record['year']}-{record['period'][1:]}-15'),
+            datetime.strptime(f'{record["year"]}-{record["period"][1:]}-15'),
             float(record['value'])
         )
         for record in aggregated_data
