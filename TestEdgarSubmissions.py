@@ -15,7 +15,7 @@ HEADERS = {
 # ('0001331875'),
 # ('0000036405')
 
-for i in range(1, 41):
+for i in range(1, 100):
     num_raw = str(i)
     num = num_raw.rjust(3, '0')
     url = f'https://data.sec.gov/submissions/CIK0001557156-submissions-{num}.json'
