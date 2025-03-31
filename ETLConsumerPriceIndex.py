@@ -43,7 +43,7 @@ def LoadCPIData(transformed_data):
     mongo_client = MongoClient(host=MONGO_HOST, port=MONGO_PORT)
     mongo_client['economic-data']['cpi'].insert_many(transformed_data)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     cpi_records = ExtractCPIData()
     transformed_records = TransformCPIData(cpi_records)
     LoadCPIData(transformed_records)
