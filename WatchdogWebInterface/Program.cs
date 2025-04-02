@@ -11,6 +11,11 @@ builder.Services.AddDbContext<WatchdogWebInterfaceIdentityDbContext>(options => 
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WatchdogWebInterfaceIdentityDbContext>();
 
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.RedirectStatusCode = Status307TemporaryRedirect;
+    options.HttpsPort = 5003;
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -26,13 +31,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.AddHttpsRedirection(options =>
-{
-    options.RedirectStatusCode = Status307TemporaryRedirect;
-    options.HttpsPort = 5000;
-});
-
-app.useHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();

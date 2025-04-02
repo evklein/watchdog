@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WatchdogWebInterface")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5516b060e4594fabe0ae01f508b98da8c830f50d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2fb0fa80bd4004f2ba8f95c943be9860f04507d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("WatchdogWebInterface")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WatchdogWebInterface")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
