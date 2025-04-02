@@ -17,73 +17,73 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WatchdogWebInterface
 build_property.RootNamespace = WatchdogWebInterface
-build_property.ProjectDir = /Users/evan/Github/watchdog/WatchdogWebInterface/
+build_property.ProjectDir = /home/eklein217/watchdog/WatchdogWebInterface/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/evan/Github/watchdog/WatchdogWebInterface
+build_property.MSBuildProjectDirectory = /home/eklein217/watchdog/WatchdogWebInterface
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/App.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/Pages/Counter.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Db3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/Pages/Error.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/Pages/Home.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Ib21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/Pages/Weather.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/Pages/Weather.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9XZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/Routes.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Sb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/_Imports.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9fSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/Layout/MainLayout.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-y5j8vh0ejy
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Components/Layout/NavMenu.razor]
+[/home/eklein217/watchdog/WatchdogWebInterface/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-3wy2fcirul
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Areas/Identity/Pages/_ViewStart.cshtml]
+[/home/eklein217/watchdog/WatchdogWebInterface/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXMvSWRlbnRpdHkvUGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Pages/Shared/_Layout.cshtml]
+[/home/eklein217/watchdog/WatchdogWebInterface/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Pages/Shared/_LoginPartial.cshtml]
+[/home/eklein217/watchdog/WatchdogWebInterface/Pages/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[/home/eklein217/watchdog/WatchdogWebInterface/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Pages/_ViewImports.cshtml]
+[/home/eklein217/watchdog/WatchdogWebInterface/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/evan/Github/watchdog/WatchdogWebInterface/Pages/_ViewStart.cshtml]
+[/home/eklein217/watchdog/WatchdogWebInterface/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

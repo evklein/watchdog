@@ -6978,25 +6978,24 @@
     ]
   },
   "packageFolders": {
-    "/Users/evan/.nuget/packages/": {}
+    "/home/eklein217/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/evan/Github/watchdog/WatchdogWebInterface/WatchdogWebInterface.csproj",
+      "projectUniqueName": "/home/eklein217/watchdog/WatchdogWebInterface/WatchdogWebInterface.csproj",
       "projectName": "WatchdogWebInterface",
-      "projectPath": "/Users/evan/Github/watchdog/WatchdogWebInterface/WatchdogWebInterface.csproj",
-      "packagesPath": "/Users/evan/.nuget/packages/",
-      "outputPath": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/",
+      "projectPath": "/home/eklein217/watchdog/WatchdogWebInterface/WatchdogWebInterface.csproj",
+      "packagesPath": "/home/eklein217/.nuget/packages/",
+      "outputPath": "/home/eklein217/watchdog/WatchdogWebInterface/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/evan/.nuget/NuGet/NuGet.Config"
+        "/home/eklein217/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -7069,7 +7068,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
