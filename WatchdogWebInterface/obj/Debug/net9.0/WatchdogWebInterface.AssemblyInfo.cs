@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("WatchdogWebInterface")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3dde05146519c8174ae354c0acccfae148875a9c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+507bef671249a2462bb63cbacc31518a3cbf81f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("WatchdogWebInterface")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WatchdogWebInterface")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

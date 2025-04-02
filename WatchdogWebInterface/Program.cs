@@ -1,6 +1,14 @@
 using WatchdogWebInterface.Components;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WatchdogWebInterface.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("WatchdogWebInterfaceIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'WatchdogWebInterfaceIdentityDbContextConnection' not found.");;
+
+builder.Services.AddDbContext<WatchdogWebInterfaceIdentityDbContext>(options => options.UseSqlite(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WatchdogWebInterfaceIdentityDbContext>();
 
 
 // Add services to the container.
@@ -17,13 +25,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
+app.MapRazorPages();
+app.MapBlazorHub();
 app.Run();
