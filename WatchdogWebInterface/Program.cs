@@ -2,6 +2,7 @@ using WatchdogWebInterface.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WatchdogWebInterface.Areas.Identity.Data;
+using Radzen;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,12 +18,15 @@ builder.Services.AddHttpsRedirection(options =>
     options.HttpsPort = 5003;
 });
 
+builder.Services.AddRadzenComponents();
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
 
+Console.WriteLine(app.Environment);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

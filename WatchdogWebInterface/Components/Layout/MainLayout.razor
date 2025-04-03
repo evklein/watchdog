@@ -1,23 +1,44 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-	    <a href="Identity/Account/Login">Login</a>
-        </div>
-
-        <article class="content px-4">
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="HandleSidebarToggle" />
+            <h1>
+                <i class="fa-solid fa-shield-dog wd-blue"></i>
+                <span class="wd-blue">Watch<span class="wd-red">dog</span></span>
+            </h1>
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar @bind-Expanded="@sidebar1Expanded" Style="background: none;">
+        <RadzenPanelMenu>
+            <div class="navbar-item">
+                <i class="fa-solid fa-scale-unbalanced-flip"></i>
+                <span>Economy</span>          
+            </div>
+            <RadzenPanelMenuItem Text="Economy" Path="economy">
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Users" Icon="account_box" />
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    <RadzenBody>
+        <div class="rz-p-4">
             @Body
-        </article>
-    </main>
-</div>
+        </div>
+    </RadzenBody>
+    <RadzenFooter>
+        <span  style="float: right;">
+            🛠️&nbsp;&nbsp;by Evan Klein, Copyright 2025
+        </span>
+    </RadzenFooter>
+</RadzenLayout>
+<RadzenComponents @rendermode="InteractiveServer" />
 
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>
+@code {
+    bool sidebar1Expanded = true;
+
+    private void HandleSidebarToggle()
+    {
+        sidebar1Expanded = !sidebar1Expanded;
+    }
+}
