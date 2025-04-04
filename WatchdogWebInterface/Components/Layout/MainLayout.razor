@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@inject NavigationManager NavigationManager
 <RadzenLayout>
     <RadzenHeader>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
@@ -8,17 +8,33 @@
                 <i class="fa-solid fa-shield-dog wd-blue"></i>
                 <span class="wd-blue">Watch<span class="wd-red">dog</span></span>
             </h1>
+            <div style="margin-left: auto; margin-right: 50px;">
+                <AuthorizeView>
+                    <Authorized>
+                        <a href="Identity/Account/Logout">Log Out</a>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="Identity/Account/Login">Log In</a> |
+                        <a href="Identity/Account/Register">Register</a>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
         </RadzenStack>
     </RadzenHeader>
-    <RadzenSidebar @bind-Expanded="@sidebar1Expanded" Style="background: none;">
+    <RadzenSidebar @bind-Expanded="@sidebar1Expanded" Style="background-color: #fff;">
         <RadzenPanelMenu>
-            <div class="navbar-item">
-                <i class="fa-solid fa-scale-unbalanced-flip"></i>
+            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/economy"))">
+                <i class="navbar-item-icon fa-solid fa-money-bill-wave"></i>
                 <span>Economy</span>          
             </div>
-            <RadzenPanelMenuItem Text="Economy" Path="economy">
-            </RadzenPanelMenuItem>
-            <RadzenPanelMenuItem Text="Users" Icon="account_box" />
+            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/funds"))">
+                <i class="navbar-item-icon fa-solid fa-money-bill-trend-up"></i>
+                <span>Funds</span>          
+            </div>
+            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/housing"))">
+                <i class="navbar-item-icon fa-solid fa-house"></i>
+                <span>Housing</span>
+            </div>
         </RadzenPanelMenu>
     </RadzenSidebar>
     <RadzenBody>
@@ -35,8 +51,7 @@
 <RadzenComponents @rendermode="InteractiveServer" />
 
 @code {
-    bool sidebar1Expanded = true;
-
+    bool sidebar1Expanded = false;
     private void HandleSidebarToggle()
     {
         sidebar1Expanded = !sidebar1Expanded;

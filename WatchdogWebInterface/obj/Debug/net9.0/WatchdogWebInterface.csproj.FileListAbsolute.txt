@@ -770,8 +770,6 @@
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/yidnic588c-h1s4sie4z3.gz
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/zrc7nwnrmj-63fj8s7r0e.gz
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/aamxbrx2tm-0j3bgjxly4.gz
-/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-5hw62x1hd1.gz
-/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-5hw62x1hd1.gz
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/staticwebassets.build.json
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/staticwebassets.development.json
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/staticwebassets.build.endpoints.json
@@ -826,3 +824,6 @@
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/i1901ftr2x-kp0ueqs315.gz
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/6xb9o06z95-dtys3jdja3.gz
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/70p3x13mpz-8oopr5v12d.gz
+/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/Components/Pages/Home.razor.rz.scp.css
+/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-yogtgt857u.gz
+/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-yogtgt857u.gz

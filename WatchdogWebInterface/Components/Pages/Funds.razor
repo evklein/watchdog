@@ -1,0 +1,97 @@
+@page "/funds"
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
+    <h1>Funds & Filings</h1>
+    <p>Understand holding changes over time</p>
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
+        <RadzenDropDown Multiple="false"
+            Data="entities"
+            TValue="string"
+            Placeholder="SEC Entity..."
+        />
+        <RadzenDropDown Multiple="false"
+            Data="funds"
+            TValue="string"
+            Placeholder="Fund..."
+        />
+        <RadzenDropDown Multiple="false"
+            Data="fundClasses"
+            TValue="string"
+            Placeholder="Fund class..."
+        />
+        <RadzenButton Icon="clear" ButtonStyle="@ButtonStyle.Danger" Text="Clear settings" />
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal">
+        <RadzenCard Style="width: 65%;">
+            <RadzenDataGrid Data="filingsForFund">
+                <Columns>
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.FilingId)"
+                        Title="Filing ID"
+                        Filterable="false"
+                    />
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.SeriesClassCompositeKey)"
+                        Title="SeriesClassCompositeKey"
+                        Filterable="false"
+                    />
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.ReportingPeriodEnd)"
+                        Title="Filing Date"
+                        Filterable="false"
+                    />
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalAssetsValue)"
+                        Title="Asset Value"
+                        Filterable="false"
+                    />
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalLiabilitiesValue)"
+                        Title="Liab. Value"
+                        Filterable="false"
+                    />
+                    <RadzenDataGridColumn Property="actions"
+                        Title="Actions"
+                        Filterable="false"
+                    >
+                        <Template Context="filing">
+                            <RadzenButton Icon="view"></RadzenButton>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenCard>
+        <RadzenCard Style="width: 35%;">
+            <RadzenStack Orientation="Orientation.Vertical" Gap="0rem">
+                <h3>As-of Last Filing</h3>
+                <hr />
+                <b>Total Assets:</b>
+                <b>Total Liabilities:</b>
+                <b>Net Value:</b>
+                <span><b>7</b> securities held</span>
+            </RadzenStack>
+        </RadzenCard>
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal">
+        <RadzenCard Style="width: 100%">
+            <RadzenTabs RenderMode="TabRenderMode.Client">
+                <Tabs>
+                    <RadzenTabsItem Icon="insert_chart" Text="Holdings"></RadzenTabsItem>
+                    <RadzenTabsItem Icon="data_usage" Text="Securities breakdown"></RadzenTabsItem>
+                    <RadzenTabsItem Icon="area_chart" Text="Over time"></RadzenTabsItem>
+                </Tabs>
+            </RadzenTabs>
+        </RadzenCard>
+    </RadzenStack>
+</RadzenStack>
+
+@code {
+    private List<string> entities = new();
+    private List<string> funds = new();
+    private List<string> fundClasses = new();
+    private List<NPORTFiling> filingsForFund = new();
+
+    protected override void OnInitialized()
+    {
+        funds = new List<string>()
+        {
+            "Fund 1",
+            "Fund 2"
+        };
+    }
+}

@@ -2,8 +2,48 @@
 
 <PageTitle>Home</PageTitle>
 
-<RadzenStack class="rz-p-0 rz-p-md-6 rz-p-lg-12">
-    <i class="fa-solid fa-shield-dog"></i>
+<RadzenStack Orientation="Orientation.Vertical">
+    <h1>Home</h1>
+    <p>Welcome to <b><span class="wd-blue">Watch</span><span class="wd-red">dog</span></b>, a financial analytics tool. Use this page to navigate to different parts of the application.</p>
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
+        <RadzenCard Style="width: 33.333%">
+            <h3><i class="fa-solid fa-money-bill-wave"></i>&nbsp;&nbsp;Economy</h3>
+            <p>
+                View financial indices, economic health indicators, and other statistics.
+            </p>
+            <div>
+                <a class="card-link" href="/economy">
+                    <span>Go to <b>Economy</b></span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </RadzenCard>
+        <RadzenCard Style="width: 33.333%">
+            <h3><i class="fa-solid fa-money-bill-trend-up"></i>&nbsp;&nbsp;Funds</h3>
+            <p>
+                Use public data to understand fund structures, holdings, and changes over time.
+            </p>
+            <div>
+                <a class="card-link" href="/funds">
+                    <span>Go to <b>Funds</b></span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </RadzenCard>
+        <RadzenCard Style="width: 33.333%">
+            <h3><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Housing</h3>
+            <p>
+                Parse housing markets across the country.
+            </p>
+            <div>
+                <a class="card-link" href="/housing">
+                    <span>Go to <b>Housing</b></span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </RadzenCard>
+    </RadzenStack>
+
 </RadzenStack>
 
 @code {
