@@ -29,7 +29,7 @@ def ExtractEdgarData(sql_connection, cursor):
     cursor.execute(retrieve_cik_command)
     ciks_raw = cursor.fetchall()
     ciks = [cik_obj[0] for cik_obj in ciks_raw]
-    print(f'{length(ciks)} CIK(s) found. Ready to import.')
+    print(f'{len(ciks)} CIK(s) found. Ready to import.')
 
     ## Grab JSON from EDGAR - pull out what we need an insert it into table
     for cik in ciks:
