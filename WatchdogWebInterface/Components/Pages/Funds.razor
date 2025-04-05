@@ -30,7 +30,10 @@
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
         <RadzenCard Style="width: 65%; height: 300px;">
-            <RadzenDataGrid Data="filingsForFund" Style="height: 250px; overflow-y: scroll;">
+            <RadzenDataGrid Data="filingsForFund"
+                Style="height: 260px;"
+                SelectionMode="DataGridSelectionMode.Single"
+            >
                 <Columns>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.FilingId)"
                         Title="Filing ID"
@@ -43,13 +46,13 @@
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalAssetsValue)"
                         Title="Assets"
                         Filterable="false"
-                        FormatString="{0:C}"
+                        FormatString="${0:N2}"
                     >
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalLiabilitiesValue)"
                         Title="Liabilities"
                         Filterable="false"
-                        FormatString="({0:C})"
+                        FormatString="(${0:N2})"
                     />
                 </Columns>
             </RadzenDataGrid>
