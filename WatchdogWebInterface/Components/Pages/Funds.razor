@@ -48,7 +48,8 @@
                         Title="Class"
                         Filterable="false">
                         <Template Context="filing">
-                            @filing.SeriesClassCompositeKey.Split("-")[1]
+                            @* @filing.SeriesClassCompositeKey.Split("-")[1] *@
+                            @filing.SeriesClassCompositeKey
                         </Template>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.ReportingPeriodEnd)"
@@ -93,44 +94,44 @@
                     <RadzenTabsItem Icon="insert_chart" Text="Holdings">
                         @if (_holdingsForFiling.Any())
                         {
-                                <RadzenDataGrid Data="_holdingsForFiling"
-                                    TValue="FundHolding"
-                                    Style="height: 400px;"
-                                    IsLoading="_holdingsLoading"
-                                >
-                                    <Columns>
-                                        <RadzenDataGridColumn Property="@nameof(FundHolding.LEI)"
-                                            Title="LEI"
-                                            Filterable="false"
-                                        />
-                                        <RadzenDataGridColumn Property="@nameof(FundHolding.SecurityName)"
-                                            Title="Security"
-                                            Filterable="false"
-                                        />
-                                        <RadzenDataGridColumn Property="@nameof(FundHolding.Balance)"
-                                            Title="Balance"
-                                            Filterable="false"
-                                        />
-                                        <RadzenDataGridColumn Property="@nameof(FundHolding.ValueUSD)"
-                                            Title="Value"
-                                            Filterable="false"
-                                            FormatString="${0:N2}"
-                                        />
-                                        <RadzenDataGridColumn Property="@nameof(FundHolding.PercentOfHoldings)"
-                                            Title="Percent of Holdings"
-                                            Filterable="false"
-                                            FormatString="{0:F5}%"
-                                        />
-                                       <RadzenDataGridColumn Property="@nameof(FundHolding.AssetCategory)"
-                                            Title="Category"
-                                            Filterable="false"
-                                        />
-                                    </Columns>
-                                </RadzenDataGrid>
+                                        <RadzenDataGrid Data="_holdingsForFiling"
+                                            TValue="FundHolding"
+                                            Style="height: 400px;"
+                                            IsLoading="_holdingsLoading"
+                                        >
+                                            <Columns>
+                                                <RadzenDataGridColumn Property="@nameof(FundHolding.LEI)"
+                                                    Title="LEI"
+                                                    Filterable="false"
+                                                />
+                                                <RadzenDataGridColumn Property="@nameof(FundHolding.SecurityName)"
+                                                    Title="Security"
+                                                    Filterable="false"
+                                                />
+                                                <RadzenDataGridColumn Property="@nameof(FundHolding.Balance)"
+                                                    Title="Balance"
+                                                    Filterable="false"
+                                                />
+                                                <RadzenDataGridColumn Property="@nameof(FundHolding.ValueUSD)"
+                                                    Title="Value"
+                                                    Filterable="false"
+                                                    FormatString="${0:N2}"
+                                                />
+                                                <RadzenDataGridColumn Property="@nameof(FundHolding.PercentOfHoldings)"
+                                                    Title="Percent of Holdings"
+                                                    Filterable="false"
+                                                    FormatString="{0:F5}%"
+                                                />
+                                               <RadzenDataGridColumn Property="@nameof(FundHolding.AssetCategory)"
+                                                    Title="Category"
+                                                    Filterable="false"
+                                                />
+                                            </Columns>
+                                        </RadzenDataGrid>
                         }
                         else
                         {
-                                <p>Please select a filing Total view holdings.</p>
+                                        <p>Please select a filing Total view holdings.</p>
                         }
                     </RadzenTabsItem>
                     <RadzenTabsItem Icon="data_usage" Text="Asset breakdown"></RadzenTabsItem>
@@ -174,6 +175,11 @@
         _selectedEntityCik = string.Empty;
         _selectedFundCompositeKey = string.Empty;
         _selectedFilingId = string.Empty;
+
+        _funds = new();
+        _fundClasses = new();
+        _filingsForFund = new();
+        _holdingsForFiling = new();
     }
 
     private void HandleSelectSECEntityChange()
