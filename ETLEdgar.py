@@ -23,7 +23,7 @@ def Fetch(req_url, json=False):
     response = requests.get(req_url, headers = HEADERS)
     return response.json() if json == True else response
 
-def ExtractEdgarData():
+def ExtractEdgarData(sql_connection, cursor):
     ## Get CIKs from database
     retrieve_cik_command = 'SELECT CIK FROM SECEntities;'
     cursor.execute(retrieve_cik_command)
@@ -32,7 +32,7 @@ def ExtractEdgarData():
     print(f'{length(ciks)} CIK(s) found. Ready to import.')
 
     ## Grab JSON from EDGAR - pull out what we need an insert it into table
-    for cik in ciks
+    for cik in ciks:
         try:
             print(f'Scraping entity submissions for CIK {cik}.')
             
@@ -56,7 +56,7 @@ def ExtractEdgarData():
             print(f'CIK{cik}: {len(nport_filing_ids)} NPORT-P filings found, initiating per-filing scrape(s).')
             for filing_id in nport_filing_ids:
                 print(f'Importing Filing - {filing_id} for entity {edgar_res["name"]}')
-                ImportFiling(sql_connection, cik, filing_id)
+                ImportFiling(sql_connection, cursor, cik, filing_id)
         except RuntimeError as error:
             print(f'Error scraping entity submissions for CIK {cik}. Moving to next.')
             print(error)
@@ -79,7 +79,7 @@ def CombRemainingFileIds(edgar_res):
         additional_filing_ids += [filing[0].replace('-', '') for filing in filings if filing[1] == 'NPORT-P']
     return additional_filing_ids
 
-def ImportFiling(sql_connection, cik, filing_id):
+def ImportFiling(sql_connection, cursor, cik, filing_id):
     req_url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{filing_id}/primary_doc.xml'
     nport_req = requests.get(req_url, headers = HEADERS)
     nport_xml = BeautifulSoup(nport_req.text, 'xml')
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     sql_connection = sqlite3.connect(EDGAR_DB_CONNECTION_STR)
     cursor = sql_connection.cursor()
 
-    edgar_data = ExtractEdgarData()
+    edgar_data = ExtractEdgarData(sql_connection, cursor)
     transformed_data = TransformEdgarData(edgar_data)
     LoadData(transformed_data)
 
