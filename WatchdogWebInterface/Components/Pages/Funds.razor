@@ -11,11 +11,15 @@
             TValue="SECEntity"
             Multiple="false"
             Placeholder="SEC Entity..."
+            Change="@(cik => HandleSelectSECEntityChange((string)cik))"
         />
-        <RadzenDropDown Multiple="false"
-            Data="funds"
-            TValue="string"
+        <RadzenDropDown Data="funds"
+            TextProperty="@nameof(SeriesClass.Name)"
+            ValueProperty="@nameof(SeriesClass.CompositeKey)"
+            TValue="SeriesClass"
+            Multiple="false"
             Placeholder="Fund..."
+            Change="@(compositeKey => HandleSelectFund((string)compositeKey))"
         />
         <RadzenDropDown Multiple="false"
             Data="fundClasses"
@@ -87,12 +91,22 @@
 
 @code {
     private List<SECEntity> entities = new();
-    private List<string> funds = new();
+    private List<SeriesClass> funds = new();
     private List<string> fundClasses = new();
     private List<NPORTFiling> filingsForFund = new();
 
     protected override void OnInitialized()
     {
         entities = EdgarRepository.LoadSECEntities();
+    }
+
+    private void HandleSelectSECEntityChange(string cik)
+    {
+        funds = EdgarRepository.LoadFunds(cik);
+    }
+
+    private void HandleSelectFund(string compositeKey)
+    {
+
     }
 }
