@@ -37,7 +37,7 @@
             <RadzenDataGrid Data="_filingsForFund"
                 Style="height: 260px;"
                 SelectionMode="DataGridSelectionMode.Single"
-                Change="HandleSelectFiling"
+                RowSelect="@((NPORTFiling f) => HandleSelectFiling(f))"
             >
                 <Columns>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.FilingId)"
@@ -84,7 +84,7 @@
             </RadzenStack>
         </RadzenCard>
     </RadzenStack>
-    <RadzenStack Orientation="Orientation.Horizontal">
+    <RadzenStack Orientation="Orientation.Vertical">
         <RadzenCard Style="width: 100%">
             <h3>Holdings</h3>
             <hr />
