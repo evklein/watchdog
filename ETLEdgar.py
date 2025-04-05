@@ -52,7 +52,7 @@ def ExtractEdgarData(sql_connection, cursor):
             sql_connection.commit()
 
             nport_filing_ids = CompileFilingIds(edgar_res)
-            nport_filing_ids += CombRemainingFilingIds(edgar_res)
+            nport_filing_ids += CombRemainingFileIds(edgar_res)
 
             print(f'CIK{cik}: {len(nport_filing_ids)} NPORT-P filings found, initiating per-filing scrape(s).')
             for filing_id in nport_filing_ids:
