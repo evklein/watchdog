@@ -29,15 +29,11 @@
         <RadzenButton Icon="clear" ButtonStyle="@ButtonStyle.Danger" Text="Clear settings" />
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
-        <RadzenCard Style="width: 65%;">
-            <RadzenDataGrid Data="filingsForFund">
+        <RadzenCard Style="width: 65%; height: 300px;">
+            <RadzenDataGrid Data="filingsForFund" Style="height: 250px; overflow-y: scroll;">
                 <Columns>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.FilingId)"
                         Title="Filing ID"
-                        Filterable="false"
-                    />
-                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.SeriesClassCompositeKey)"
-                        Title="SeriesClassCompositeKey"
                         Filterable="false"
                     />
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.ReportingPeriodEnd)"
@@ -45,21 +41,17 @@
                         Filterable="false"
                     />
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalAssetsValue)"
-                        Title="Asset Value"
+                        Title="Assets"
                         Filterable="false"
-                    />
-                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalLiabilitiesValue)"
-                        Title="Liab. Value"
-                        Filterable="false"
-                    />
-                    <RadzenDataGridColumn Property="actions"
-                        Title="Actions"
-                        Filterable="false"
+                        FormatString="{0:C}"
                     >
-                        <Template Context="filing">
-                            <RadzenButton Icon="view"></RadzenButton>
-                        </Template>
                     </RadzenDataGridColumn>
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalLiabilitiesValue)"
+                        Title="Liabilities"
+                        Filterable="false"
+                        FormatString="({0:C})"
+                        Style="color: darkred;"
+                    />
                 </Columns>
             </RadzenDataGrid>
         </RadzenCard>
