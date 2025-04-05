@@ -19,22 +19,22 @@ public class EdgarRepository : IEdgarRepository
             {
                 using (var reader = command.ExecuteReader())
                 {
-                    Console.WriteLine("INside reader");
-                    SECEntity entity = new();
+                    Console.WriteLine("Inside reader");
+                    // Loop through all rows in the result set
+                    while (reader.Read())
+                    {
+                        SECEntity entity = new();
 
-                    // Safe way to get string values that might be NULL
-                    entity.CIK = reader.IsDBNull(reader.GetOrdinal("CIK")) ? null : reader.GetString(reader.GetOrdinal("CIK"));
-                    entity.Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString(reader.GetOrdinal("Name"));
-                    entity.EntityType = reader.IsDBNull(reader.GetOrdinal("EntityType")) ? null : reader.GetString(reader.GetOrdinal("EntityType"));
-                    entity.IncorporationState = reader.IsDBNull(reader.GetOrdinal("IncorporationState")) ? null : reader.GetString(reader.GetOrdinal("IncorporationState"));
-                    entity.PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber"));
-                    entity.Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address"));
+                        // Safe way to get string values that might be NULL
+                        entity.CIK = reader.IsDBNull(reader.GetOrdinal("CIK")) ? null : reader.GetString(reader.GetOrdinal("CIK"));
+                        entity.Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString(reader.GetOrdinal("Name"));
+                        entity.EntityType = reader.IsDBNull(reader.GetOrdinal("EntityType")) ? null : reader.GetString(reader.GetOrdinal("EntityType"));
+                        entity.IncorporationState = reader.IsDBNull(reader.GetOrdinal("IncorporationState")) ? null : reader.GetString(reader.GetOrdinal("IncorporationState"));
+                        entity.PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber"));
+                        entity.Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address"));
 
-
-                    // Only add if it has valid filings.
-                    // string countQuery = $"SELECT COUNT(*) FROM NPORTFilings WHERE EntityCIK = '{entity.CIK}'";
-
-                    entities.Add(entity);
+                        entities.Add(entity);
+                    }
                 }
             }
         }
