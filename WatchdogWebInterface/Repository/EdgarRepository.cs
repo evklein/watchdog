@@ -35,7 +35,10 @@ public class EdgarRepository : IEdgarRepository
                         entity.PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber"));
                         entity.Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address"));
 
-                        entities.Add(entity);
+                        if (entity.EntityType != null || entity.EntityType != null))
+                        {
+                            entities.Add(entity);
+                        }
                     }
                 }
             }
