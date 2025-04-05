@@ -5,6 +5,7 @@ public interface IEdgarRepository
     List<SECEntity> LoadSECEntities();
     List<SeriesClass> LoadFunds(string cik);
     List<NPORTFiling> LoadFilings(string cik, string seriesClassCompositeKey);
+    List<FundHolding> LoadHoldings(string filingId);
 }
 
 public class EdgarRepository : IEdgarRepository
@@ -101,5 +102,39 @@ public class EdgarRepository : IEdgarRepository
             }
         }
         return filings;
+    }
+
+    public List<FundHolding> LoadHoldings(string filingId)
+    {
+        string query = $"SELECT * FROM FundHoldings WHERE NPORTFilingId = '{filingId}';";
+        List<FundHolding> holdings = new();
+        using (var connection = new SqliteConnection("Data Source=../../data/EdgarData.db"))
+        {
+            connection.Open();
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    // Loop through all rows in the result set
+                    while (reader.Read())
+                    {
+                        FundHolding holding = new();
+
+                        // Safe way to get string values that might be NULL
+                        holding.HoldingId = reader.IsDBNull(reader.GetOrdinal("HoldingId")) ? null : reader.GetString(reader.GetOrdinal("HoldingId"));
+                        holding.LEI = reader.IsDBNull(reader.GetOrdinal("LEI")) ? null : reader.GetString(reader.GetOrdinal("LEI"));
+                        holding.SecurityName = reader.IsDBNull(reader.GetOrdinal("SecurityName")) ? null : reader.GetString(reader.GetOrdinal("SecurityName"));
+                        holding.SecurityTitle = reader.IsDBNull(reader.GetOrdinal("SecurityTitle")) ? null : reader.GetString(reader.GetOrdinal("SecurityTitle"));
+                        holding.Balance = reader.IsDBNull(reader.GetOrdinal("Balance")) ? 0 : reader.GetDouble(reader.GetOrdinal("Balance"));
+                        holding.ValueUSD = reader.IsDBNull(reader.GetOrdinal("ValueUSD")) ? 0 : reader.GetDouble(reader.GetOrdinal("ValueUSD"));
+                        holding.PercentOfHoldings = reader.IsDBNull(reader.GetOrdinal("PercentOfHoldings")) ? 0 : reader.GetDouble(reader.GetOrdinal("PercentOfHoldings"));
+                        holding.AssetCategory = reader.IsDBNull(reader.GetOrdinal("AssetCategory")) ? null : reader.GetString(reader.GetOrdinal("AssetCategory"));
+                        holding.NPORTFilingId = reader.IsDBNull(reader.GetOrdinal("NPORTFilingId")) ? null : reader.GetString(reader.GetOrdinal("NPORTFilingId"));
+                        holdings.Add(holding);
+                    }
+                }
+            }
+        }
+        return holdings;
     }
 }

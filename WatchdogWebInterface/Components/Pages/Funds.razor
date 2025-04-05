@@ -31,8 +31,10 @@
     <RadzenStack Orientation="Orientation.Horizontal">
         <RadzenCard Style="width: 65%; height: 300px;">
             <RadzenDataGrid Data="filingsForFund"
+                TItem="NPORTFiling"
                 Style="height: 260px;"
                 SelectionMode="DataGridSelectionMode.Single"
+                RowSelect="HandleSelectFiling"
             >
                 <Columns>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.FilingId)"
@@ -73,7 +75,39 @@
             <RadzenTabs RenderMode="TabRenderMode.Client">
                 <Tabs>
                     <RadzenTabsItem Icon="insert_chart" Text="Holdings">
-
+                        <RadzenDataGrid Data="holdingsForFiling"
+                            TValue="FundHolding"
+                            Style="height: 400px;"
+                        >
+                            <Columns>
+                                <RadzenDataGridColumn Property="@nameof(FundHolding.LEI)"
+                                    Title="LEI"
+                                    Filterable="false"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(FundHolding.SecurityName)"
+                                    Title="Security"
+                                    Filterable="false"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(FundHolding.Balance)"
+                                    Title="Balance"
+                                    Filterable="false"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(FundHolding.ValueUSD)"
+                                    Title="Value"
+                                    Filterable="false"
+                                    FormatString="${0:N2}"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(FundHolding.PercentOfHoldings)"
+                                    Title="Percent of Holdings"
+                                    Filterable="false"
+                                    FormatString="{0:P3}"
+                                />
+                               <RadzenDataGridColumn Property="@nameof(FundHolding.AssetCategory)"
+                                    Title="Category"
+                                    Filterable="false"
+                                />
+                            </Columns>
+                        </RadzenDataGrid>
                     </RadzenTabsItem>
                     <RadzenTabsItem Icon="data_usage" Text="Securities breakdown"></RadzenTabsItem>
                     <RadzenTabsItem Icon="area_chart" Text="Over time"></RadzenTabsItem>
@@ -88,6 +122,7 @@
     private List<SeriesClass> funds = new();
     private List<string> fundClasses = new();
     private List<NPORTFiling> filingsForFund = new();
+    private List<FundHolding> holdingsForFiling = new();
 
     private string _selectedCik = string.Empty;
 
@@ -105,5 +140,10 @@
     private void HandleSelectFund(string compositeKey)
     {
         filingsForFund = EdgarRepository.LoadFilings(_selectedCik, compositeKey);
+    }
+
+    private void HandleSelectFiling(NPORTFiling filing)
+    {
+        holdingsForFiling = EdgarRepository.LoadHoldings(filing.FilingId);
     }
 }
