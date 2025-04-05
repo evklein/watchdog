@@ -1,12 +1,15 @@
 @page "/funds"
+@inject IEdgarRepository EdgarRepository
 
 <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
     <h1>Funds & Filings</h1>
     <p>Understand holding changes over time</p>
     <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
-        <RadzenDropDown Multiple="false"
-            Data="entities"
-            TValue="string"
+        <RadzenDropDown Data="entities"
+            TextProperty="@nameof(SECEntity.Name)"
+            ValueProperty="@nameof(SECEntity.CIK)"
+            TValue="SECEntity"
+            Multiple="false"
             Placeholder="SEC Entity..."
         />
         <RadzenDropDown Multiple="false"
@@ -71,7 +74,9 @@
         <RadzenCard Style="width: 100%">
             <RadzenTabs RenderMode="TabRenderMode.Client">
                 <Tabs>
-                    <RadzenTabsItem Icon="insert_chart" Text="Holdings"></RadzenTabsItem>
+                    <RadzenTabsItem Icon="insert_chart" Text="Holdings">
+
+                    </RadzenTabsItem>
                     <RadzenTabsItem Icon="data_usage" Text="Securities breakdown"></RadzenTabsItem>
                     <RadzenTabsItem Icon="area_chart" Text="Over time"></RadzenTabsItem>
                 </Tabs>
@@ -81,17 +86,13 @@
 </RadzenStack>
 
 @code {
-    private List<string> entities = new();
+    private List<SECEntity> entities = new();
     private List<string> funds = new();
     private List<string> fundClasses = new();
     private List<NPORTFiling> filingsForFund = new();
 
     protected override void OnInitialized()
     {
-        funds = new List<string>()
-        {
-            "Fund 1",
-            "Fund 2"
-        };
+        entities = EdgarRepository.LoadSECEntities();
     }
 }

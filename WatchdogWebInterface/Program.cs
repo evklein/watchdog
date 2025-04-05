@@ -19,6 +19,7 @@ builder.Services.AddHttpsRedirection(options =>
 });
 
 builder.Services.AddRadzenComponents();
+builder.Services.AddScoped<IEdgarRepository, EdgarRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
