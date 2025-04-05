@@ -3,34 +3,40 @@
 
 <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
     <h1>Funds & Filings</h1>
-    <p>Understand holding changes over time</p>
+    <p>Understand Fund make-up and holding changes over time</p>
     <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
-        <RadzenDropDown Data="entities"
+        <RadzenDropDown Data="_entities"
             TextProperty="@nameof(SECEntity.Name)"
             ValueProperty="@nameof(SECEntity.CIK)"
             TValue="SECEntity"
             Multiple="false"
             Placeholder="SEC Entity..."
-            Change="@(cik => HandleSelectSECEntityChange((string)cik))"
+            @bind-Value="@_selectedEntity"
+            Change="HandleSelectSECEntityChange"
         />
-        <RadzenDropDown Data="funds"
+        <RadzenDropDown Data="_funds"
             TextProperty="@nameof(SeriesClass.Name)"
             ValueProperty="@nameof(SeriesClass.CompositeKey)"
             TValue="SeriesClass"
             Multiple="false"
             Placeholder="Fund..."
-            Change="@(compositeKey => HandleSelectFund((string)compositeKey))"
+            @bind-Value="@_selectedFund"
+            Change="HandleSelectFund"
         />
         <RadzenDropDown Multiple="false"
-            Data="fundClasses"
+            Data="_fundClasses"
             TValue="string"
             Placeholder="Fund class..."
         />
-        <RadzenButton Icon="clear" ButtonStyle="@ButtonStyle.Danger" Text="Clear settings" />
+        <RadzenButton Icon="clear"
+            ButtonStyle="@ButtonStyle.Danger"
+            Text="Clear settings"
+            Click="ClearSettings"
+        />
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
         <RadzenCard Style="height: 300px; width: 65%;">
-            <RadzenDataGrid Data="filingsForFund"
+            <RadzenDataGrid Data="_filingsForFund"
                 TItem="NPORTFiling"
                 Style="height: 260px;"
                 SelectionMode="DataGridSelectionMode.Single"
@@ -83,10 +89,12 @@
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
         <RadzenCard Style="width: 100%">
+            <h3>Holdings</h3>
+            <hr />
             <RadzenTabs RenderMode="TabRenderMode.Client">
                 <Tabs>
                     <RadzenTabsItem Icon="insert_chart" Text="Holdings">
-                        <RadzenDataGrid Data="holdingsForFiling"
+                        <RadzenDataGrid Data="_holdingsForFiling"
                             TValue="FundHolding"
                             Style="height: 400px;"
                         >
@@ -124,36 +132,65 @@
                 </Tabs>
             </RadzenTabs>
         </RadzenCard>
+        <RadzenCard Style="width: 100%">
+            <h3>Over Time</h3>
+            <RadzenTabs RenderMode="TabRenderMode.Client">
+                <Tabs>
+                    <RadzenTabsItem Icon="monitoring" Text="Value">
+
+                    </RadzenTabsItem>
+                    <RadzenTabsItem Icon="query_stats" Text="By Securities">
+
+                    </RadzenTabsItem>
+                </Tabs>
+            </RadzenTabs>
+        </RadzenCard>
     </RadzenStack>
 </RadzenStack>
 
 @code {
-    private List<SECEntity> entities = new();
-    private List<SeriesClass> funds = new();
-    private List<string> fundClasses = new();
-    private List<NPORTFiling> filingsForFund = new();
-    private List<FundHolding> holdingsForFiling = new();
-
-    private string _selectedCik = string.Empty;
+    private List<SECEntity> _entities = new();
+    private List<SeriesClass> _funds = new();
+    private List<string> _fundClasses = new();
+    private List<NPORTFiling> _filingsForFund = new();
+    private List<FundHolding> _holdingsForFiling = new();
+    private SECEntity? _selectedEntity;
+    private SeriesClass? _selectedFund;
+    private NPORTFiling? _selectedFiling;
 
     protected override void OnInitialized()
     {
-        entities = EdgarRepository.LoadSECEntities();
+        _entities = EdgarRepository.LoadSECEntities();
     }
 
-    private void HandleSelectSECEntityChange(string cik)
+    private void ClearSettings()
     {
-        _selectedCik = cik;
-        funds = EdgarRepository.LoadFunds(cik);
+        _selectedEntity = null;
+        _selectedFund = null;
+        _selectedFiling = null;
     }
 
-    private void HandleSelectFund(string compositeKey)
+    private void HandleSelectSECEntityChange()
     {
-        filingsForFund = EdgarRepository.LoadFilings(_selectedCik, compositeKey);
+        if (_selectedEntity is not null)
+        {
+            _funds = EdgarRepository.LoadFunds(_selectedEntity.CIK);
+        }
     }
 
-    private void HandleSelectFiling(NPORTFiling filing)
+    private void HandleSelectFund()
     {
-        holdingsForFiling = EdgarRepository.LoadHoldings(filing.FilingId);
+        if (_selectedEntity is not null && _selectedFund is not null)
+        {
+            _filingsForFund = EdgarRepository.LoadFilings(_selectedEntity.CIK, _selectedFund.CompositeKey);
+        }
+    }
+
+    private void HandleSelectFiling()
+    {
+        if (_selectedEntity is not null && _selectedFund is not null && _selectedFiling is not null)
+        {
+            _holdingsForFiling = EdgarRepository.LoadHoldings(_selectedFiling.FilingId);
+        }
     }
 }
