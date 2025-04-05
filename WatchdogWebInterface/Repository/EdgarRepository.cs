@@ -138,6 +138,6 @@ public class EdgarRepository : IEdgarRepository
                 }
             }
         }
-        return holdings;
+        return holdings.OrderByDescending(h => h.PercentOfHoldings).ToList();
     }
 }

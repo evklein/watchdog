@@ -29,7 +29,7 @@
         <RadzenButton Icon="clear" ButtonStyle="@ButtonStyle.Danger" Text="Clear settings" />
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
-        <RadzenCard Style="height: 300px;">
+        <RadzenCard Style="height: 300px; width: 65%;">
             <RadzenDataGrid Data="filingsForFund"
                 TItem="NPORTFiling"
                 Style="height: 260px;"
@@ -41,10 +41,21 @@
                         Title="Filing ID"
                         Filterable="false"
                     />
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.SeriesClassCompositeKey)"
+                        Title="Class"
+                        Filterable="false">
+                        <Template Context="filing">
+                            @filing.SeriesClassCompositeKey.Split("-")[1]
+                        </Template>
+                    </RadzenDataGridColumn>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.ReportingPeriodEnd)"
                         Title="Filing Date"
                         Filterable="false"
-                    />
+                    >
+                        <Template Context="filing">
+                            @filing.ReportingPeriodEnd.Date.ToShortDateString()
+                        </Template>
+                    </RadzenDataGridColumn>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalAssetsValue)"
                         Title="Assets"
                         Filterable="false"
@@ -59,7 +70,7 @@
                 </Columns>
             </RadzenDataGrid>
         </RadzenCard>
-        <RadzenCard Style="width: 35%;">
+        <RadzenCard Style="width: 35%; height: 300px;">
             <RadzenStack Orientation="Orientation.Vertical" Gap="0rem">
                 <h3>As-of Last Filing</h3>
                 <hr />
@@ -100,7 +111,7 @@
                                 <RadzenDataGridColumn Property="@nameof(FundHolding.PercentOfHoldings)"
                                     Title="Percent of Holdings"
                                     Filterable="false"
-                                    FormatString="{0:P3}"
+                                    FormatString="{0:3}%"
                                 />
                                <RadzenDataGridColumn Property="@nameof(FundHolding.AssetCategory)"
                                     Title="Category"
