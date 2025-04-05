@@ -12,7 +12,7 @@ public class EdgarRepository : IEdgarRepository
         Console.WriteLine("Loading SEC ents");
         string query = "SELECT * FROM SECEntities;";
         List<SECEntity> entities = new();
-        using (var connection = new SqliteConnection("../../../data/EdgarData.db"))
+        using (var connection = new SqliteConnection("Data Source=../../../data/EdgarData.db"))
         {
             connection.Open();
             using (var command = new SqliteCommand(query, connection))
