@@ -4,6 +4,7 @@ public interface IEdgarRepository
 {
     List<SECEntity> LoadSECEntities();
     List<SeriesClass> LoadFunds(string cik);
+    List<NPORTFiling> LoadFilings(string cik, string seriesClassCompositeKey);
 }
 
 public class EdgarRepository : IEdgarRepository
@@ -69,5 +70,36 @@ public class EdgarRepository : IEdgarRepository
             }
         }
         return funds;
+    }
+
+    public List<NPORTFiling> LoadFilings(string cik, string seriesClassCompositeKey)
+    {
+        string query = $"SELECT * FROM NPORTFiling WHERE EntityCIK = '{cik}' AND SeriesClassCompositeKey = '{seriesClassCompositeKey}';";
+        List<NPORTFiling> filings = new();
+        using (var connection = new SqliteConnection("Data Source=../../data/EdgarData.db"))
+        {
+            connection.Open();
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    // Loop through all rows in the result set
+                    while (reader.Read())
+                    {
+                        NPORTFiling filing = new();
+
+                        // Safe way to get string values that might be NULL
+                        filing.FilingId = reader.IsDBNull(reader.GetOrdinal("FilingId")) ? null : reader.GetString(reader.GetOrdinal("FilingId"));
+                        filing.EntityCIK = reader.IsDBNull(reader.GetOrdinal("EntityCIK")) ? null : reader.GetString(reader.GetOrdinal("EntityCIK"));
+                        filing.SeriesClassCompositeKey = reader.IsDBNull(reader.GetOrdinal("SeriesClassCompositeKey")) ? null : reader.GetString(reader.GetOrdinal("SeriesClassCompositeKey"));
+                        filing.ReportingPeriodEnd = reader.IsDBNull(reader.GetOrdinal("ReportingPeriodEnd")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ReportingPeriodEnd"));
+                        filing.TotalAssetsValue = reader.IsDBNull(reader.GetOrdinal("TotalAssetsValue")) ? 0 : reader.GetDouble(reader.GetOrdinal("TotalAssetsValue"));
+                        filing.TotalLiabilitiesValue = reader.IsDBNull(reader.GetOrdinal("TotalLiabilitiesValue")) ? 0 : reader.GetDouble(reader.GetOrdinal("TotalLiabilitiesValue"));
+                        filings.Add(filing);
+                    }
+                }
+            }
+        }
+        return filings;
     }
 }

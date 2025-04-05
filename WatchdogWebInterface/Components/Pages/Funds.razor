@@ -95,6 +95,8 @@
     private List<string> fundClasses = new();
     private List<NPORTFiling> filingsForFund = new();
 
+    private string _selectedCik = string.Empty;
+
     protected override void OnInitialized()
     {
         entities = EdgarRepository.LoadSECEntities();
@@ -102,11 +104,12 @@
 
     private void HandleSelectSECEntityChange(string cik)
     {
+        _selectedCik = cik;
         funds = EdgarRepository.LoadFunds(cik);
     }
 
     private void HandleSelectFund(string compositeKey)
     {
-
+        filingsForFund = EdgarRepository.LoadFilings(_selectedCik, compositeKey);
     }
 }
