@@ -13,7 +13,9 @@ HEADERS = {
 }
 REQ_LIMIT_PER_SEC = 9 # Timing fun - SEC asks for no more than 10 req/sec.
 REQ_LIMIT_PAUSE_INTERVAL = 1 # In seconds
+
 global_request_count = 0
+global_request_failures = 0
 
 def Fetch(req_url, json=False):
     global global_request_count
@@ -24,7 +26,9 @@ def Fetch(req_url, json=False):
     response = requests.get(req_url, headers = HEADERS)
     return response.json() if json == True else response
 
-def ExtractEdgarData(sql_connection, cursor):
+def ETLEdgarData(sql_connection, cursor):
+    global global_request_failures
+
     ## Get CIKs from database
     retrieve_cik_command = 'SELECT CIK FROM SECEntities;'
     cursor.execute(retrieve_cik_command)
@@ -57,8 +61,15 @@ def ExtractEdgarData(sql_connection, cursor):
             print(f'CIK{cik}: {len(nport_filing_ids)} NPORT-P filings found, initiating per-filing scrape(s).')
             for filing_id in nport_filing_ids:
                 print(f'Importing Filing - {filing_id} for entity {edgar_res["name"]}')
-                ImportFiling(sql_connection, cursor, cik, filing_id)
+                try:
+                    ImportFiling(sql_connection, cursor, cik, filing_id)
+                except RuntimeError as error:
+                    global_request_failures += 1
+                    print(f'Error scraping filing for CIK {cik}. Error count added to.')
+                    print(error)
+
         except RuntimeError as error:
+            global_request_failures += 1
             print(f'Error scraping entity submissions for CIK {cik}. Moving to next.')
             print(error)
 
@@ -139,7 +150,8 @@ if __name__ == "__main__":
     sql_connection = sqlite3.connect(EDGAR_DB_CONNECTION_STR)
     cursor = sql_connection.cursor()
 
-    edgar_data = ExtractEdgarData(sql_connection, cursor)
-    transformed_data = TransformEdgarData(edgar_data)
-    LoadData(transformed_data)
+    ETLEdgarData(sql_connection, cursor)
+    global_request_count = 0
+    global_request_failures = 0
+    print(f'ETL for Edgar CIKs complete. {global_request_count} requests to EDGAR made. {global_request_failures} failures detected.')
 
