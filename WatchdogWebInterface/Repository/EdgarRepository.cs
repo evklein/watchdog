@@ -73,7 +73,7 @@ public class EdgarRepository : IEdgarRepository
                 }
             }
         }
-        return funds;
+        return funds.DistinctBy(f => f.SeriesId).ToList();
     }
 
     public List<NPORTFiling> LoadFilings(string cik, string seriesClassCompositeKey)
