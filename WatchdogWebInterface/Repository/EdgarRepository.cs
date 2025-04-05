@@ -43,7 +43,7 @@ public class EdgarRepository : IEdgarRepository
                 }
             }
         }
-        return entities;
+        return entities.OrderBy(e => e.Name).ToList();
     }
 
     public List<SeriesClass> LoadFunds(string cik)
