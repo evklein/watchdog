@@ -1,0 +1,223 @@
+@page "/economy"
+@using System.ComponentModel
+@using System.Globalization
+
+<RadzenStack Orientation="Orientation.Vertical">
+    <h1>Economy</h1>
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
+        <RadzenDropDown Data="@availableTimeSeries"
+            @bind-Value="@selectedTimeSeries"
+            Multiple="true"
+            AllowClear="true"
+            AllowSelectAll="true"
+            AllowFiltering="true"
+            Placeholder="Select time series"
+        />
+        <RadzenDatePicker @bind-Value="_startDate"
+            Placeholder="Range start date"
+        />
+        <RadzenDatePicker @bind-Value="_endDate"
+            Placeholder="Range end date"
+        />
+        <RadzenDropDown Data="@viewModes"
+            TValue="ViewMode"
+            TextProperty="@nameof(ViewMode.Text)"
+            ValueProperty="@nameof(ViewMode.Setting)"
+            Placeholder="Select view mode"
+            Style="margin-left: auto;"
+        />
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.2rem" Style="max-width: 200px;">
+        @foreach (string series in selectedTimeSeries)
+        {
+                            <RadzenBadge Text="@series"
+                                IsPill="true"
+                            />
+        }
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal">
+        <RadzenChart Style="width: 100%; height: 500px;">
+            <RadzenChartTooltipOptions Shared="true" />
+            <RadzenLineSeries Data="@revenue2023" CategoryProperty="Date" Title="2023" LineType="LineType.Dashed" ValueProperty="Revenue">
+            </RadzenLineSeries>
+            <RadzenLineSeries Data="@revenue2024" CategoryProperty="Date" Title="2024" ValueProperty="Revenue" />
+            <RadzenCategoryAxis Padding="20" />
+            <RadzenValueAxis Formatter="@FormatAsUSD">
+                <RadzenGridLines Visible="true" />
+                <RadzenAxisTitle Text="Revenue in USD" />
+            </RadzenValueAxis>
+        </RadzenChart>
+    </RadzenStack>
+</RadzenStack>
+
+@code {
+    private List<string> availableTimeSeries = new() { "series1", "series2", "series3", "series4" };
+    private List<string> selectedTimeSeries = new();
+    private DateTime _startDate;
+    private DateTime _endDate;
+    private List<ViewMode> viewModes = new()
+    {
+        new ViewMode { Setting = ViewModeOption.OneGraph, Text = "Display all series with one display" },
+        new ViewMode { Setting = ViewModeOption.OneGraph, Text = "Display each series in its own graph" },
+        new ViewMode { Setting = ViewModeOption.OneGraph, Text = "Display each series in its own graph (2 columns)" },
+        new ViewMode { Setting = ViewModeOption.OneGraph, Text = "Display each series in its own graph (3 columns)" }
+    };
+
+    class ViewMode
+    {
+        public ViewModeOption Setting { get; set; }
+        public string Text { get; set; } = string.Empty;
+    }
+
+    enum ViewModeOption
+    {
+        [Description("Display all series with one display")]
+        OneGraph,
+
+        [Description("Display each series in its own graph")]
+        OneColumn,
+
+        [Description("Display each series in its own graph (2 columns)")]
+        TwoColumns,
+
+        [Description("Display each series in its own graph (3 columns)")]
+        ThreeColumns,
+    }
+
+    class DataItem
+    {
+        public string Date { get; set; }
+        public double Revenue { get; set; }
+    }
+
+    string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+
+    DataItem[] revenue2023 = new DataItem[] {
+        new DataItem
+        {
+            Date = "Jan",
+            Revenue = 234000
+        },
+        new DataItem
+        {
+            Date = "Feb",
+            Revenue = 269000
+        },
+        new DataItem
+        {
+            Date = "Mar",
+            Revenue = 233000
+        },
+        new DataItem
+        {
+            Date = "Apr",
+            Revenue = 244000
+        },
+        new DataItem
+        {
+            Date = "May",
+            Revenue = 214000
+        },
+        new DataItem
+        {
+            Date = "Jun",
+            Revenue = 253000
+        },
+        new DataItem
+        {
+            Date = "Jul",
+            Revenue = 274000
+        },
+        new DataItem
+        {
+            Date = "Aug",
+            Revenue = 284000
+        },
+        new DataItem
+        {
+            Date = "Sept",
+            Revenue = 273000
+        },
+        new DataItem
+        {
+            Date = "Oct",
+            Revenue = 282000
+        },
+        new DataItem
+        {
+            Date = "Nov",
+            Revenue = 289000
+        },
+        new DataItem
+        {
+            Date = "Dec",
+            Revenue = 294000
+        }
+    };
+
+    DataItem[] revenue2024 = new DataItem[] {
+        new DataItem
+        {
+            Date = "Jan",
+            Revenue = 334000
+        },
+        new DataItem
+        {
+            Date = "Feb",
+            Revenue = 369000
+        },
+        new DataItem
+        {
+            Date = "Mar",
+            Revenue = 333000
+        },
+        new DataItem
+        {
+            Date = "Apr",
+            Revenue = 344000
+        },
+        new DataItem
+        {
+            Date = "May",
+            Revenue = 314000
+        },
+        new DataItem
+        {
+            Date = "Jun",
+            Revenue = 353000
+        },
+        new DataItem
+        {
+            Date = "Jul",
+            Revenue = 374000
+        },
+        new DataItem
+        {
+            Date = "Aug",
+            Revenue = 384000
+        },
+        new DataItem
+        {
+            Date = "Sept",
+            Revenue = 373000
+        },
+        new DataItem
+        {
+            Date = "Oct",
+            Revenue = 382000
+        },
+        new DataItem
+        {
+            Date = "Nov",
+            Revenue = 389000
+        },
+        new DataItem
+        {
+            Date = "Dec",
+            Revenue = 394000
+        }
+    };
+}

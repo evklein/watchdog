@@ -825,5 +825,5 @@
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/6xb9o06z95-dtys3jdja3.gz
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/70p3x13mpz-8oopr5v12d.gz
 /Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/Components/Pages/Home.razor.rz.scp.css
-/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-yogtgt857u.gz
-/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-yogtgt857u.gz
+/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-mo6vm3cbgg.gz
+/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-mo6vm3cbgg.gz

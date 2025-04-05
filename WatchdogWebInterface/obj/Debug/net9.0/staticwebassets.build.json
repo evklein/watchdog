@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SL/UX2HsfRBNNwlq7mlmHdvTtNUNLkJN0whxsNLBZmo=",
+  "Hash": "Qtf3raD6jll+4os8/KQ1JG8TLuEoGOxIVWK3Qrenpt8=",
   "Source": "WatchdogWebInterface",
   "BasePath": "_content/WatchdogWebInterface",
   "Mode": "Default",
@@ -2243,12 +2243,12 @@
       "OriginalItemSpec": "/Users/evan/.nuget/packages/microsoft.aspnetcore.identity.ui/9.0.3/staticwebassets/V5/lib/jquery-validation/dist/jquery.validate.min.js"
     },
     {
-      "Identity": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-yogtgt857u.gz",
+      "Identity": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-mo6vm3cbgg.gz",
       "SourceId": "WatchdogWebInterface",
       "SourceType": "Computed",
       "ContentRoot": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/",
       "BasePath": "_content/WatchdogWebInterface",
-      "RelativePath": "WatchdogWebInterface#[.{fingerprint=yogtgt857u}]!.bundle.scp.css.gz",
+      "RelativePath": "WatchdogWebInterface#[.{fingerprint=mo6vm3cbgg}]!.bundle.scp.css.gz",
       "AssetKind": "All",
       "AssetMode": "Reference",
       "AssetRole": "Alternative",
@@ -2257,8 +2257,8 @@
       "RelatedAsset": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/projectbundle/WatchdogWebInterface.bundle.scp.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "zy9tppem11",
-      "Integrity": "RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=",
+      "Fingerprint": "404sb23ieb",
+      "Integrity": "vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/projectbundle/WatchdogWebInterface.bundle.scp.css"
@@ -3293,12 +3293,12 @@
       "OriginalItemSpec": "/Users/evan/.nuget/packages/radzen.blazor/6.4.0/staticwebassets/css/material-wcag.css"
     },
     {
-      "Identity": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-yogtgt857u.gz",
+      "Identity": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-mo6vm3cbgg.gz",
       "SourceId": "WatchdogWebInterface",
       "SourceType": "Computed",
       "ContentRoot": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/",
       "BasePath": "_content/WatchdogWebInterface",
-      "RelativePath": "WatchdogWebInterface#[.{fingerprint=yogtgt857u}]?.styles.css.gz",
+      "RelativePath": "WatchdogWebInterface#[.{fingerprint=mo6vm3cbgg}]?.styles.css.gz",
       "AssetKind": "All",
       "AssetMode": "CurrentProject",
       "AssetRole": "Alternative",
@@ -3307,8 +3307,8 @@
       "RelatedAsset": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/bundle/WatchdogWebInterface.styles.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "zy9tppem11",
-      "Integrity": "RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=",
+      "Fingerprint": "404sb23ieb",
+      "Integrity": "vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/bundle/WatchdogWebInterface.styles.css"
@@ -5029,8 +5029,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
-      "Fingerprint": "yogtgt857u",
-      "Integrity": "wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=",
+      "Fingerprint": "mo6vm3cbgg",
+      "Integrity": "aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/bundle/WatchdogWebInterface.styles.css"
@@ -5050,8 +5050,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "yogtgt857u",
-      "Integrity": "wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=",
+      "Fingerprint": "mo6vm3cbgg",
+      "Integrity": "aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/projectbundle/WatchdogWebInterface.bundle.scp.css"
@@ -36350,12 +36350,12 @@
     },
     {
       "Route": "WatchdogWebInterface.bundle.scp.css",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-yogtgt857u.gz",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-mo6vm3cbgg.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000722021661"
+          "Quality": "0.000720980534"
         }
       ],
       "ResponseHeaders": [
@@ -36365,15 +36365,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1384"
+          "Value": "1386"
         },
         {
           "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36393,13 +36393,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
+          "Value": "W/\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
         }
       ]
     },
@@ -36422,11 +36422,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
+          "Value": "\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36436,13 +36436,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
         }
       ]
     },
     {
       "Route": "WatchdogWebInterface.bundle.scp.css.gz",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-yogtgt857u.gz",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-mo6vm3cbgg.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -36451,7 +36451,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1384"
+          "Value": "1386"
         },
         {
           "Name": "Content-Type",
@@ -36459,11 +36459,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36481,18 +36481,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ="
+          "Value": "sha256-vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0="
         }
       ]
     },
     {
-      "Route": "WatchdogWebInterface.styles.css",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-yogtgt857u.gz",
+      "Route": "WatchdogWebInterface.mo6vm3cbgg.bundle.scp.css",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-mo6vm3cbgg.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000722021661"
+          "Quality": "0.000720980534"
         }
       ],
       "ResponseHeaders": [
@@ -36502,152 +36502,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1384"
+          "Value": "1386"
         },
         {
           "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
-        }
-      ]
-    },
-    {
-      "Route": "WatchdogWebInterface.styles.css",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/bundle/WatchdogWebInterface.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "4264"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
-        }
-      ]
-    },
-    {
-      "Route": "WatchdogWebInterface.styles.css.gz",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-yogtgt857u.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1384"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ="
-        }
-      ]
-    },
-    {
-      "Route": "WatchdogWebInterface.yogtgt857u.bundle.scp.css",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-yogtgt857u.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000722021661"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1384"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36667,13 +36530,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
+          "Value": "W/\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "yogtgt857u"
+          "Value": "mo6vm3cbgg"
         },
         {
           "Name": "label",
@@ -36681,12 +36544,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
         }
       ]
     },
     {
-      "Route": "WatchdogWebInterface.yogtgt857u.bundle.scp.css",
+      "Route": "WatchdogWebInterface.mo6vm3cbgg.bundle.scp.css",
       "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/projectbundle/WatchdogWebInterface.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -36704,11 +36567,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
+          "Value": "\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36718,7 +36581,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "yogtgt857u"
+          "Value": "mo6vm3cbgg"
         },
         {
           "Name": "label",
@@ -36726,13 +36589,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
         }
       ]
     },
     {
-      "Route": "WatchdogWebInterface.yogtgt857u.bundle.scp.css.gz",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-yogtgt857u.gz",
+      "Route": "WatchdogWebInterface.mo6vm3cbgg.bundle.scp.css.gz",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/2yenzeq0py-mo6vm3cbgg.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -36741,7 +36604,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1384"
+          "Value": "1386"
         },
         {
           "Name": "Content-Type",
@@ -36749,11 +36612,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36771,7 +36634,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "yogtgt857u"
+          "Value": "mo6vm3cbgg"
         },
         {
           "Name": "label",
@@ -36779,18 +36642,18 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ="
+          "Value": "sha256-vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0="
         }
       ]
     },
     {
-      "Route": "WatchdogWebInterface.yogtgt857u.styles.css",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-yogtgt857u.gz",
+      "Route": "WatchdogWebInterface.mo6vm3cbgg.styles.css",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-mo6vm3cbgg.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000722021661"
+          "Quality": "0.000720980534"
         }
       ],
       "ResponseHeaders": [
@@ -36800,15 +36663,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1384"
+          "Value": "1386"
         },
         {
           "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36828,13 +36691,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
+          "Value": "W/\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "yogtgt857u"
+          "Value": "mo6vm3cbgg"
         },
         {
           "Name": "label",
@@ -36842,12 +36705,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
         }
       ]
     },
     {
-      "Route": "WatchdogWebInterface.yogtgt857u.styles.css",
+      "Route": "WatchdogWebInterface.mo6vm3cbgg.styles.css",
       "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/bundle/WatchdogWebInterface.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -36865,11 +36728,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0=\""
+          "Value": "\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36879,7 +36742,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "yogtgt857u"
+          "Value": "mo6vm3cbgg"
         },
         {
           "Name": "label",
@@ -36887,13 +36750,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-wl3CcgVMIJB8ZVhhv1eB3ASCrx6sc89zOVJbRXpWUe0="
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
         }
       ]
     },
     {
-      "Route": "WatchdogWebInterface.yogtgt857u.styles.css.gz",
-      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-yogtgt857u.gz",
+      "Route": "WatchdogWebInterface.mo6vm3cbgg.styles.css.gz",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-mo6vm3cbgg.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -36902,7 +36765,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1384"
+          "Value": "1386"
         },
         {
           "Name": "Content-Type",
@@ -36910,11 +36773,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ=\""
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 04 Apr 2025 02:48:12 GMT"
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -36932,7 +36795,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "yogtgt857u"
+          "Value": "mo6vm3cbgg"
         },
         {
           "Name": "label",
@@ -36940,7 +36803,144 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-RQvf8yPFRp+ZynlK8k/+ppX3zChiZB96FiR9srE2WGQ="
+          "Value": "sha256-vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0="
+        }
+      ]
+    },
+    {
+      "Route": "WatchdogWebInterface.styles.css",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-mo6vm3cbgg.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000720980534"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1386"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
+        }
+      ]
+    },
+    {
+      "Route": "WatchdogWebInterface.styles.css",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/scopedcss/bundle/WatchdogWebInterface.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4264"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-aopklqbdODqF9aINb2ZC5LQUFWvdrMtCx2LFifsIkk0="
+        }
+      ]
+    },
+    {
+      "Route": "WatchdogWebInterface.styles.css.gz",
+      "AssetFile": "/Users/evan/Github/watchdog/WatchdogWebInterface/obj/Debug/net9.0/compressed/g5qbcxzzbr-mo6vm3cbgg.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1386"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 04 Apr 2025 02:48:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-vBnlBsXGY9+z1ziTRFK/EmMWbg5Zu96mpj3Z/7dlSM0="
         }
       ]
     }
