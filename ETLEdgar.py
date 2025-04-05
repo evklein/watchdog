@@ -16,6 +16,7 @@ REQ_LIMIT_PAUSE_INTERVAL = 1 # In seconds
 global_request_count = 0
 
 def Fetch(req_url, json=False):
+    global global_request_count
     if global_request_count % REQ_LIMIT_PER_SEC == 0:
         time.sleep(REQ_LIMIT_PAUSE_INTERVAL)
 
