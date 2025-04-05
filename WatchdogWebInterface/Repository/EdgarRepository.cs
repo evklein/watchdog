@@ -9,15 +9,17 @@ public class EdgarRepository : IEdgarRepository
 {
     public List<SECEntity> LoadSECEntities()
     {
+        Console.WriteLine("Loading SEC ents");
         string query = "SELECT * FROM SECEntities;";
         List<SECEntity> entities = new();
-        using (var connection = new SqliteConnection("../../data/EdgarData.db"))
+        using (var connection = new SqliteConnection("../../../data/EdgarData.db"))
         {
             connection.Open();
             using (var command = new SqliteCommand(query, connection))
             {
                 using (var reader = command.ExecuteReader())
                 {
+                    Console.WriteLine("INside reader");
                     SECEntity entity = new()
                     {
                         CIK = reader.GetString(reader.GetOrdinal("CIK")),
