@@ -8,19 +8,17 @@
         <RadzenDropDown Data="_entities"
             TextProperty="@nameof(SECEntity.Name)"
             ValueProperty="@nameof(SECEntity.CIK)"
-            TValue="SECEntity"
             Multiple="false"
             Placeholder="SEC Entity..."
-            @bind-Value="@_selectedEntity"
-            Change="HandleSelectSECEntityChange"
+            @bind-Value="@_selectedEntityCik"
+            Change="@(_ => HandleSelectSECEntityChange())"
         />
         <RadzenDropDown Data="_funds"
             TextProperty="@nameof(SeriesClass.Name)"
             ValueProperty="@nameof(SeriesClass.CompositeKey)"
-            TValue="SeriesClass"
             Multiple="false"
             Placeholder="Fund..."
-            @bind-Value="@_selectedFund"
+            @bind-Value="@_selectedFundCompositeKey"
             Change="HandleSelectFund"
         />
         <RadzenDropDown Multiple="false"
@@ -37,10 +35,9 @@
     <RadzenStack Orientation="Orientation.Horizontal">
         <RadzenCard Style="height: 300px; width: 65%;">
             <RadzenDataGrid Data="_filingsForFund"
-                TItem="NPORTFiling"
                 Style="height: 260px;"
                 SelectionMode="DataGridSelectionMode.Single"
-                RowSelect="HandleSelectFiling"
+                Change="HandleSelectFiling"
             >
                 <Columns>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.FilingId)"
@@ -154,9 +151,9 @@
     private List<string> _fundClasses = new();
     private List<NPORTFiling> _filingsForFund = new();
     private List<FundHolding> _holdingsForFiling = new();
-    private SECEntity? _selectedEntity;
-    private SeriesClass? _selectedFund;
-    private NPORTFiling? _selectedFiling;
+    private string _selectedEntityCik = string.Empty;
+    private string _selectedFundCompositeKey = string.Empty;
+    private string _selectedFilingId = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -165,32 +162,32 @@
 
     private void ClearSettings()
     {
-        _selectedEntity = null;
-        _selectedFund = null;
-        _selectedFiling = null;
+        _selectedEntityCik = string.Empty;
+        _selectedFundCompositeKey = string.Empty;
+        _selectedFilingId = string.Empty;
     }
 
     private void HandleSelectSECEntityChange()
     {
-        if (_selectedEntity is not null)
+        if (!string.IsNullOrEmpty(_selectedEntityCik))
         {
-            _funds = EdgarRepository.LoadFunds(_selectedEntity.CIK);
+            _funds = EdgarRepository.LoadFunds(_selectedEntityCik);
         }
     }
 
     private void HandleSelectFund()
     {
-        if (_selectedEntity is not null && _selectedFund is not null)
+        if (!string.IsNullOrEmpty(_selectedEntityCik) && !string.IsNullOrEmpty(_selectedFundCompositeKey))
         {
-            _filingsForFund = EdgarRepository.LoadFilings(_selectedEntity.CIK, _selectedFund.CompositeKey);
+            _filingsForFund = EdgarRepository.LoadFilings(_selectedEntityCik, _selectedFundCompositeKey);
         }
     }
 
-    private void HandleSelectFiling()
+    private void HandleSelectFiling(NPORTFiling filing)
     {
-        if (_selectedEntity is not null && _selectedFund is not null && _selectedFiling is not null)
+        if (!string.IsNullOrEmpty(_selectedEntityCik) && !string.IsNullOrEmpty(_selectedFundCompositeKey) && filing is not null)
         {
-            _holdingsForFiling = EdgarRepository.LoadHoldings(_selectedFiling.FilingId);
+            _holdingsForFiling = EdgarRepository.LoadHoldings(filing.FilingId);
         }
     }
 }
