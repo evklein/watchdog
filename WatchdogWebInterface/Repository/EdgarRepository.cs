@@ -74,7 +74,7 @@ public class EdgarRepository : IEdgarRepository
 
     public List<NPORTFiling> LoadFilings(string cik, string seriesClassCompositeKey)
     {
-        string query = $"SELECT * FROM NPORTFiling WHERE EntityCIK = '{cik}' AND SeriesClassCompositeKey = '{seriesClassCompositeKey}';";
+        string query = $"SELECT * FROM NPORTFilings WHERE EntityCIK = '{cik}' AND SeriesClassCompositeKey = '{seriesClassCompositeKey}';";
         List<NPORTFiling> filings = new();
         using (var connection = new SqliteConnection("Data Source=../../data/EdgarData.db"))
         {
