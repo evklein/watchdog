@@ -21,6 +21,10 @@ builder.Services.AddHttpsRedirection(options =>
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<IEdgarRepository, EdgarRepository>();
 
+builder.Services.Configure<ConnectionStringOptions>(
+    builder.Configuration.GetSection("ConnectionStrings")
+);
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();

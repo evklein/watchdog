@@ -1,33 +1,38 @@
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
 
 public interface IEdgarRepository
 {
     List<SECEntity> LoadSECEntities();
     List<SeriesClass> LoadFunds(string cik);
-    List<NPORTFiling> LoadFilings(string cik, string seriesClassCompositeKey);
+    List<NPORTFiling> LoadFilings(string cik, string seriesId, string classId);
+    List<string> LoadClassCodesForSeries(string seriesId);
     List<FundHolding> LoadHoldings(string filingId);
 }
 
 public class EdgarRepository : IEdgarRepository
 {
+    private readonly ConnectionStringOptions _connectionStringOptions;
+
+    public EdgarRepository(IOptions<ConnectionStringOptions> connStringOptions)
+    {
+        _connectionStringOptions = connStringOptions.Value;
+    }
+
     public List<SECEntity> LoadSECEntities()
     {
         string query = "SELECT * FROM SECEntities";
         List<SECEntity> entities = new();
-        using (var connection = new SqliteConnection("Data Source=../../data/EdgarData.db"))
+        using (var connection = new SqliteConnection(_connectionStringOptions.EdgarDbConnection))
         {
             connection.Open();
             using (var command = new SqliteCommand(query, connection))
             {
                 using (var reader = command.ExecuteReader())
                 {
-                    Console.WriteLine("Inside reader");
-                    // Loop through all rows in the result set
                     while (reader.Read())
                     {
                         SECEntity entity = new();
-
-                        // Safe way to get string values that might be NULL
                         entity.CIK = reader.IsDBNull(reader.GetOrdinal("CIK")) ? null : reader.GetString(reader.GetOrdinal("CIK"));
                         entity.Name = reader.IsDBNull(reader.GetOrdinal("Name")) ? null : reader.GetString(reader.GetOrdinal("Name"));
                         entity.EntityType = reader.IsDBNull(reader.GetOrdinal("EntityType")) ? null : reader.GetString(reader.GetOrdinal("EntityType"));
@@ -50,7 +55,7 @@ public class EdgarRepository : IEdgarRepository
     {
         string query = $"SELECT SC.Name, SC.SeriesId, SC.ClassId, SC.CompositeKey FROM SeriesClasses SC INNER JOIN NPORTFilings NF ON SC.CompositeKey = NF.SeriesClassCompositeKey WHERE NF.EntityCIK = '{cik}';";
         List<SeriesClass> funds = new();
-        using (var connection = new SqliteConnection("Data Source=../../data/EdgarData.db"))
+        using (var connection = new SqliteConnection(_connectionStringOptions.EdgarDbConnection))
         {
             connection.Open();
             using (var command = new SqliteCommand(query, connection))
@@ -73,14 +78,40 @@ public class EdgarRepository : IEdgarRepository
                 }
             }
         }
-        return funds.OrderBy(f => f.Name).ToList();
+        return funds.DistinctBy(f => f.SeriesId).OrderBy(f => f.Name).ToList();
     }
 
-    public List<NPORTFiling> LoadFilings(string cik, string seriesClassCompositeKey)
+    public List<string> LoadClassCodesForSeries(string seriesId)
     {
-        string query = $"SELECT * FROM NPORTFilings WHERE EntityCIK = '{cik}' AND SeriesClassCompositeKey = '{seriesClassCompositeKey}';";
+        string query = $"SELECT ClassId FROM SeriesClasses WHERE SeriesId = '{seriesId}';";
+        List<string> classIds = new();
+        using (var connection = new SqliteConnection(_connectionStringOptions.EdgarDbConnection))
+        {
+            connection.Open();
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    // Loop through all rows in the result set
+                    while (reader.Read())
+                    {
+
+                        var nextClassId = reader.GetString(0);
+                        Console.WriteLine("next class Id: " + nextClassId);
+                        classIds.Add(nextClassId);
+
+                    }
+                }
+            }
+        }
+        return classIds;
+    }
+
+    public List<NPORTFiling> LoadFilings(string cik, string seriesId, string classId)
+    {
+        string query = $"SELECT * FROM NPORTFilings WHERE EntityCIK = '{cik}' AND SeriesClassCompositeKey = '{seriesId}-{classId}';";
         List<NPORTFiling> filings = new();
-        using (var connection = new SqliteConnection("Data Source=../../data/EdgarData.db"))
+        using (var connection = new SqliteConnection(_connectionStringOptions.EdgarDbConnection))
         {
             connection.Open();
             using (var command = new SqliteCommand(query, connection))
@@ -97,6 +128,7 @@ public class EdgarRepository : IEdgarRepository
                         filing.EntityCIK = reader.IsDBNull(reader.GetOrdinal("EntityCIK")) ? null : reader.GetString(reader.GetOrdinal("EntityCIK"));
                         filing.SeriesClassCompositeKey = reader.IsDBNull(reader.GetOrdinal("SeriesClassCompositeKey")) ? null : reader.GetString(reader.GetOrdinal("SeriesClassCompositeKey"));
                         filing.ReportingPeriodEnd = reader.IsDBNull(reader.GetOrdinal("ReportingPeriodEnd")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ReportingPeriodEnd"));
+                        filing.ReportingPeriodDate = reader.IsDBNull(reader.GetOrdinal("ReportingPeriodDate")) ? DateTime.MinValue : reader.GetDateTime(reader.GetOrdinal("ReportingPeriodDate"));
                         filing.TotalAssetsValue = reader.IsDBNull(reader.GetOrdinal("TotalAssetsValue")) ? 0 : reader.GetDouble(reader.GetOrdinal("TotalAssetsValue"));
                         filing.TotalLiabilitiesValue = reader.IsDBNull(reader.GetOrdinal("TotalLiabilitiesValue")) ? 0 : reader.GetDouble(reader.GetOrdinal("TotalLiabilitiesValue"));
                         filings.Add(filing);
@@ -111,7 +143,7 @@ public class EdgarRepository : IEdgarRepository
     {
         string query = $"SELECT * FROM FundHoldings WHERE NPORTFilingId = '{filingId}';";
         List<FundHolding> holdings = new();
-        using (var connection = new SqliteConnection("Data Source=../../data/EdgarData.db"))
+        using (var connection = new SqliteConnection(_connectionStringOptions.EdgarDbConnection))
         {
             connection.Open();
             using (var command = new SqliteCommand(query, connection))

@@ -1,4 +1,6 @@
 @page "/funds"
+@using System.Globalization
+@attribute [Authorize]
 @inject IEdgarRepository EdgarRepository
 
 <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
@@ -15,16 +17,17 @@
         />
         <RadzenDropDown Data="_funds"
             TextProperty="@nameof(SeriesClass.Name)"
-            ValueProperty="@nameof(SeriesClass.CompositeKey)"
+            ValueProperty="@nameof(SeriesClass.SeriesId)"
             Multiple="false"
             Placeholder="Fund..."
-            @bind-Value="@_selectedFundCompositeKey"
+            @bind-Value="@_selectedFundSeriesId"
             Change="HandleSelectFund"
         />
-        <RadzenDropDown Multiple="false"
-            Data="_fundClasses"
-            TValue="string"
+        <RadzenDropDown Data="_fundClasses"
+            Multiple="false"
             Placeholder="Fund class..."
+            @bind-Value="@_selectedFundClassId"
+            Change="HandleSelectFundClass"
         />
         <RadzenButton Icon="clear"
             ButtonStyle="@ButtonStyle.Danger"
@@ -32,12 +35,14 @@
             Click="ClearSettings"
         />
     </RadzenStack>
+    <p>@_selectedEntityCik</p>
     <RadzenStack Orientation="Orientation.Horizontal">
-        <RadzenCard Style="height: 300px; width: 65%;">
+        <RadzenCard Style="height: 300px; width: 70%;">
             <RadzenDataGrid Data="_filingsForFund"
                 Style="height: 260px;"
                 SelectionMode="DataGridSelectionMode.Single"
                 RowSelect="@((NPORTFiling f) => HandleSelectFiling(f))"
+                AllowColumnResize="true"
             >
                 <Columns>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.FilingId)"
@@ -46,18 +51,19 @@
                     />
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.SeriesClassCompositeKey)"
                         Title="Class"
-                        Filterable="false">
+                        Filterable="false"
+                        Width="7.5rem">
                         <Template Context="filing">
-                            @* @filing.SeriesClassCompositeKey.Split("-")[1] *@
-                            @filing.SeriesClassCompositeKey
+                            @filing.SeriesClassCompositeKey.Split("-")[1]
                         </Template>
                     </RadzenDataGridColumn>
-                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.ReportingPeriodEnd)"
+                    <RadzenDataGridColumn Property="@nameof(NPORTFiling.ReportingPeriodDate)"
                         Title="Filing Date"
                         Filterable="false"
+                        Width="7.5rem"
                     >
                         <Template Context="filing">
-                            @filing.ReportingPeriodEnd.Date.ToShortDateString()
+                            @filing.ReportingPeriodDate.Date.ToShortDateString()
                         </Template>
                     </RadzenDataGridColumn>
                     <RadzenDataGridColumn Property="@nameof(NPORTFiling.TotalAssetsValue)"
@@ -76,85 +82,128 @@
         </RadzenCard>
         <RadzenCard Style="width: 35%; height: 300px;">
             <RadzenStack Orientation="Orientation.Vertical" Gap="0rem">
-                <h3>As-of Last Filing</h3>
-                <hr />
-                @if (_mostRecentFiling is not null)
+                @if (!string.IsNullOrEmpty(_selectedFundClassId))
                 {
-                        <div>
-                            <span><b>@_mostRecentHoldingsForCurrentFund.Count</b> holdings found.</span>
-                            <span><b>@String.Format("${0:N2}", _mostRecentFiling.TotalAssetsValue)</b> in assets</span>
-                            <span><b>@String.Format("${0:N2}", _mostRecentFiling.TotalAssetsValue)</b> in liabilities</span>
-                        </div>
-                        <b></b>
-                        <b>Net Value:</b>
-                        <span><b>7</b> securities held</span>
+                                                                                                                                                    <h5>@_selectedFundClassId</h5>
+                                                                                                                                                    <p>@_filingsForFund.Count NPORT-P filings found</p>
+                                                                                                                                                    <hr />
+                                                                                                                                                    <b><i>Per latest filing</i></b>
+                                                                                                                                                    <div>
+                                                                                                                                                        <p style="margin: 0;"><b style="font-size: 18px;">@_mostRecentHoldingsForCurrentFund.Count</b> holdings found</p>
+                                                                                                                                                        <p style="margin: 0;"><b style="font-size: 20px; color: darkgreen;">@String.Format("${0:N2}", _mostRecentFiling.TotalAssetsValue)</b> in assets</p>
+                                                                                                                                                        <p style="margin: 0;"><b style="font-size: 20px; color: darkred;">@String.Format("${0:N2}", _mostRecentFiling.TotalLiabilitiesValue)</b> in liabilities</p>
+                                                                                                                                                        <p style="margin: 0;"><b style="font-size: 26px; color: green;">@String.Format("${0:N2}", _mostRecentFiling.TotalValue)</b> of total value</p>
+                                                                                                                                                    </div>
+                                                                                                                                                    <b></b>
                 }
                 else
                 {
-                        <p>Please select a fund to view recent records.</p>
+                                                                                                                                                    <p>Please select a fund to retrive overview.</p>
                 }
             </RadzenStack>
         </RadzenCard>
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Vertical">
         <RadzenCard Style="width: 100%">
-            <h3>Holdings</h3>
-            <hr />
             <RadzenTabs RenderMode="TabRenderMode.Client">
                 <Tabs>
                     <RadzenTabsItem Icon="insert_chart" Text="Holdings">
                         @if (_holdingsForFiling.Any())
                         {
-                                                <RadzenDataGrid Data="_holdingsForFiling"
-                                                    TValue="FundHolding"
-                                                    Style="height: 400px;"
-                                                    IsLoading="_holdingsLoading"
-                                                >
-                                                    <Columns>
-                                                        <RadzenDataGridColumn Property="@nameof(FundHolding.LEI)"
-                                                            Title="LEI"
-                                                            Filterable="false"
-                                                        />
-                                                        <RadzenDataGridColumn Property="@nameof(FundHolding.SecurityName)"
-                                                            Title="Security"
-                                                            Filterable="false"
-                                                        />
-                                                        <RadzenDataGridColumn Property="@nameof(FundHolding.Balance)"
-                                                            Title="Balance"
-                                                            Filterable="false"
-                                                        />
-                                                        <RadzenDataGridColumn Property="@nameof(FundHolding.ValueUSD)"
-                                                            Title="Value"
-                                                            Filterable="false"
-                                                            FormatString="${0:N2}"
-                                                        />
-                                                        <RadzenDataGridColumn Property="@nameof(FundHolding.PercentOfHoldings)"
-                                                            Title="Percent of Holdings"
-                                                            Filterable="false"
-                                                            FormatString="{0:F5}%"
-                                                        />
-                                                       <RadzenDataGridColumn Property="@nameof(FundHolding.AssetCategory)"
-                                                            Title="Category"
-                                                            Filterable="false"
-                                                        />
-                                                    </Columns>
-                                                </RadzenDataGrid>
+                                                                                                                                                                                                                                                                                                                                                                                                                            <RadzenDataGrid Data="_holdingsForFiling"
+                                                                                                                                                                                                                                                                                                                                                                                                                                TValue="FundHolding"
+                                                                                                                                                                                                                                                                                                                                                                                                                                Style="height: 400px;"
+                                                                                                                                                                                                                                                                                                                                                                                                                                IsLoading="_holdingsLoading"
+                                                                                                                                                                                                                                                                                                                                                                                                                            >
+                                                                                                                                                                                                                                                                                                                                                                                                                                <Columns>
+                                                                                                                                                                                                                                                                                                                                                                                                                                    <RadzenDataGridColumn Property="@nameof(FundHolding.LEI)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Title="LEI"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Filterable="false"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    />
+                                                                                                                                                                                                                                                                                                                                                                                                                                    <RadzenDataGridColumn Property="@nameof(FundHolding.SecurityName)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Title="Security"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Filterable="false"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    />
+                                                                                                                                                                                                                                                                                                                                                                                                                                    <RadzenDataGridColumn Property="@nameof(FundHolding.Balance)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Title="Balance"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Filterable="false"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    />
+                                                                                                                                                                                                                                                                                                                                                                                                                                    <RadzenDataGridColumn Property="@nameof(FundHolding.ValueUSD)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Title="Value"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Filterable="false"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        FormatString="${0:N2}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    />
+                                                                                                                                                                                                                                                                                                                                                                                                                                    <RadzenDataGridColumn Property="@nameof(FundHolding.PercentOfHoldings)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Title="Percent of Holdings"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Filterable="false"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        FormatString="{0:F5}%"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    />
+                                                                                                                                                                                                                                                                                                                                                                                                                                   <RadzenDataGridColumn Property="@nameof(FundHolding.AssetCategory)"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Title="Category"
+                                                                                                                                                                                                                                                                                                                                                                                                                                        Filterable="false"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    />
+                                                                                                                                                                                                                                                                                                                                                                                                                                </Columns>
+                                                                                                                                                                                                                                                                                                                                                                                                                            </RadzenDataGrid>
                         }
                         else
                         {
-                                <p>Please select a filing to view holdings.</p>
+                                                                                                                                                                                                                                                                                                                                                                                                            <p>Please select a filing to view holdings.</p>
                         }
                     </RadzenTabsItem>
-                    <RadzenTabsItem Icon="data_usage" Text="Asset breakdown"></RadzenTabsItem>
+                    <RadzenTabsItem Icon="data_usage" Text="Asset breakdown">
+        <RadzenChart>
+                <RadzenPieSeries Data="@_holdingsByCategory" Title="Holdings by Asset Category" CategoryProperty="Key" ValueProperty="Value">
+                    <RadzenSeriesDataLabels Visible="true" />
+                </RadzenPieSeries>
+            </RadzenChart>
+
+                    </RadzenTabsItem>
                 </Tabs>
             </RadzenTabs>
         </RadzenCard>
         <RadzenCard Style="width: 100%">
-            <h3>Over Time</h3>
             <RadzenTabs RenderMode="TabRenderMode.Client">
                 <Tabs>
-                    <RadzenTabsItem Icon="monitoring" Text="Value">
-
+                    <RadzenTabsItem Icon="monitoring" Text="Total Value">
+                        @if (_filingsForFund.Count > 0)
+                        {
+                                                                                                                        <RadzenChart Style="width: 100%; height: 400px;">
+                                                                                                                            <RadzenChartTooltipOptions Shared="true" />
+                                                                                                                            <RadzenLineSeries Data="@_filingsForFund"
+                                                                                                                                Stroke="blue"
+                                                                                                                                CategoryProperty="@nameof(NPORTFiling.ReportingPeriodDate)"
+                                                                                                                            Title="Assets"
+                                                                                                                            LineType="LineType.Dashed"
+                                                                                                                            ValueProperty="@nameof(NPORTFiling.TotalAssetsValue)"
+                                                                                                                        />
+                                                                                                                        <RadzenLineSeries Data="@_filingsForFund"
+                                                                                                                            Stroke="red"
+                                                                                                                            CategoryProperty="@nameof(NPORTFiling.ReportingPeriodDate)"
+                                                                                                                            Title="Liabilities"
+                                                                                                                            LineType="LineType.Dashed"
+                                                                                                                            ValueProperty="@nameof(NPORTFiling.TotalLiabilitiesValue)"
+                                                                                                                        />
+                                                                                                                        <RadzenLineSeries Data="@_filingsForFund"
+                                                                                                                            CategoryProperty="@nameof(NPORTFiling.ReportingPeriodDate)"
+                                                                                                                                Stroke="green"
+                                                                                                                            Title="Value"
+                                                                                                                            LineType="LineType.Solid"
+                                                                                                                            ValueProperty="@nameof(NPORTFiling.TotalValue)"
+                                                                                                                        >
+                                                                                                                            <RadzenMarkers Visible="true"
+                                                                                                                                MarkerType="MarkerType.Circle" />
+                                                                                                                        </RadzenLineSeries>
+                                                                                                                        <RadzenCategoryAxis Padding="20" />
+                                                                                                                        <RadzenValueAxis Formatter="@FormatAsUSD">
+                                                                                                                            <RadzenGridLines Visible="true" />
+                                                                                                                            <RadzenAxisTitle Text="Value in USD" />
+                                                                                                                        </RadzenValueAxis>
+                                                                                                                    </RadzenChart>
+                        }
+                        else
+                        {
+                                                                                                                                                                                                                                                                                                                                                    <p>Please select a fund to view value over time.</p>
+                        }
                     </RadzenTabsItem>
                     <RadzenTabsItem Icon="query_stats" Text="By Securities">
 
@@ -174,9 +223,11 @@
     private List<FundHolding> _mostRecentHoldingsForCurrentFund = new();
     private List<FundHolding> _holdingsForFiling = new();
     private string _selectedEntityCik = string.Empty;
-    private string _selectedFundCompositeKey = string.Empty;
+    private string _selectedFundSeriesId = string.Empty;
+    private string? _selectedFundClassId = null;
     private string _selectedFilingId = string.Empty;
     private bool _holdingsLoading = false;
+    private Dictionary<string, string> _holdingsByCategory = new();
 
     protected override void OnInitialized()
     {
@@ -186,7 +237,8 @@
     private void ClearSettings()
     {
         _selectedEntityCik = string.Empty;
-        _selectedFundCompositeKey = string.Empty;
+        _selectedFundSeriesId = string.Empty;
+        _selectedFundClassId = null;
         _selectedFilingId = string.Empty;
 
         _funds = new();
@@ -199,6 +251,14 @@
 
     private void HandleSelectSECEntityChange()
     {
+        _selectedFundSeriesId = string.Empty;
+        _selectedFundClassId = null;
+        _selectedFilingId = string.Empty;
+        _fundClasses = new();
+        _filingsForFund = new();
+        _holdingsForFiling = new();
+        _mostRecentFiling = new();
+        _mostRecentHoldingsForCurrentFund = new();
         if (!string.IsNullOrEmpty(_selectedEntityCik))
         {
             _funds = EdgarRepository.LoadFunds(_selectedEntityCik);
@@ -207,10 +267,24 @@
 
     private void HandleSelectFund()
     {
-        if (!string.IsNullOrEmpty(_selectedEntityCik) && !string.IsNullOrEmpty(_selectedFundCompositeKey))
+        _selectedFundClassId = null;
+        _selectedFilingId = string.Empty;
+        _fundClasses = new();
+        _filingsForFund = new();
+        _holdingsForFiling = new();
+        _mostRecentFiling = new();
+        _mostRecentHoldingsForCurrentFund = new();
+        if (!string.IsNullOrEmpty(_selectedEntityCik))
         {
-            _filingsForFund = EdgarRepository.LoadFilings(_selectedEntityCik, _selectedFundCompositeKey);
+            _fundClasses = EdgarRepository.LoadClassCodesForSeries(_selectedFundSeriesId);
+        }
+    }
 
+    private void HandleSelectFundClass()
+    {
+        if (!string.IsNullOrEmpty(_selectedEntityCik) && !string.IsNullOrEmpty(_selectedFundSeriesId))
+        {
+            _filingsForFund = EdgarRepository.LoadFilings(_selectedEntityCik, _selectedFundSeriesId, _selectedFundClassId);
             _mostRecentFiling = _filingsForFund.OrderByDescending(f => f.ReportingPeriodEnd)
                                             .ToList()
                                             .Take(1)
@@ -225,10 +299,27 @@
     private void HandleSelectFiling(NPORTFiling filing)
     {
         _holdingsLoading = true;
-        if (!string.IsNullOrEmpty(_selectedEntityCik) && !string.IsNullOrEmpty(_selectedFundCompositeKey) && filing is not null)
+        if (!string.IsNullOrEmpty(_selectedEntityCik) && !string.IsNullOrEmpty(_selectedFundSeriesId) && !string.IsNullOrEmpty(_selectedFundClassId) && filing is not null)
         {
             _holdingsForFiling = EdgarRepository.LoadHoldings(filing.FilingId);
+
+            var groupedHoldings = _holdingsForFiling.GroupBy(h => h.AssetCategory);
+            foreach (var group in groupedHoldings)
+            {
+                double sum = 0;
+                foreach (var holding in group)
+                {
+                    sum += (double)holding.PercentOfHoldings;
+                }
+                _holdingsByCategory[group.Key.ToString()] = sum.ToString("F2") + "%";
+            }
+
         }
         _holdingsLoading = false;
+    }
+
+    private string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
     }
 }
