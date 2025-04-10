@@ -1,11 +1,11 @@
-CREATE TABLE ImportRecord (
+CREATE TABLE ImportRecords (
     Id INTEGER PRIMARY KEY,
-    CountryCode NVARCHAR(200),
+    CountryCode NVARCHAR(50),
     CountryName NVARCHAR(200),
-    EndUseCode NVARCHAR(500),
+    EndUseCode INTEGER,
     EndUseDescription NVARCHAR(500),
-    ValueForMonth FLOAT,
-    ValueYearToDate FLOAT,
+    ValueForMonth INTEGER,
+    ValueYearToDate INTEGER,
     Month INTEGER,
     Year INTEGER
 );

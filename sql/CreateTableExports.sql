@@ -1,4 +1,4 @@
-CREATE TABLE ExportRecord (
+CREATE TABLE ExportRecords (
     Id INTEGER PRIMARY KEY,
     DistrictId INTEGER,
     DistrictName VARCHAR(200),
