@@ -107,6 +107,7 @@ def ImportFiling(sql_connection, cursor, cik, filing_id):
             "{cik}",
             "{series_composite_key}",
             "{nport_xml.find('repPdEnd').string}",
+            "{nport_xml.find('repPdDate').string}",
             {float(nport_xml.find('totAssets').string)},
             {float(nport_xml.find('totLiabs').string)}
         );'''
