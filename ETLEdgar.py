@@ -43,18 +43,6 @@ def ETLEdgarData(sql_connection, cursor):
             
             ### Grab and store entity details
             edgar_res = Fetch(f'https://data.sec.gov/submissions/CIK{cik}.json', json=True)
-            update_entity_row_command = f'''
-                UPDATE SECEntities SET
-                    Name = '{edgar_res["name"]}',
-                    EntityType = '{edgar_res["entityType"]}',
-                    IncorporationState = '{edgar_res["stateOfIncorporation"]}',
-                    PhoneNumber = '{edgar_res["phone"]}',
-                    Address = '{edgar_res["addresses"]["business"]["street1"]}'
-                WHERE CIK = '{cik}';
-            '''
-            cursor.execute(update_entity_row_command)
-            sql_connection.commit()
-
             nport_filing_ids = CompileFilingIds(edgar_res)
             nport_filing_ids += CombRemainingFileIds(edgar_res)
 
@@ -102,7 +90,7 @@ def ImportFiling(sql_connection, cursor, cik, filing_id):
     # Save series details, if none exists
     series_composite_key = f'{nport_xml.find("seriesId").string}-{nport_xml.find("classId").string}'
     save_series_query = f'''
-        REPLACE INTO SeriesClasses VALUES
+        INSERT OR REPLACE INTO SeriesClasses VALUES
         (
             "{series_composite_key}",
             "{nport_xml.find('seriesId').string}",
@@ -113,7 +101,7 @@ def ImportFiling(sql_connection, cursor, cik, filing_id):
 
     # Save filing details
     save_filing_query = f'''
-        REPLACE INTO NPORTFilings VALUES
+        INSERT OR REPLACE INTO NPORTFilings VALUES
         (
             "{filing_id}",
             "{cik}",
@@ -130,7 +118,7 @@ def ImportFiling(sql_connection, cursor, cik, filing_id):
     print(f'Scraping and loading {len(holdings)} holding(s).')
     for holding in holdings:
         save_holding_query = f'''
-            INSERT INTO FundHoldings (LEI, SecurityName, SecurityTitle, Balance, ValueUSD, PercentOfHoldings, AssetCategory, NPORTFilingId)
+            INSERT OR REPLACE INTO FundHoldings (LEI, SecurityName, SecurityTitle, Balance, ValueUSD, PercentOfHoldings, AssetCategory, NPORTFilingId)
             VALUES (
                 "{holding.find('lei').string}",
                 "{holding.find('name').string}",

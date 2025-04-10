@@ -22,6 +22,5 @@ sqlite3 $edgar_db < sql/CreateTableNPORTFilings.sql
 echo "Creating Table - FundHoldings"
 sqlite3 $edgar_db < sql/CreateTableFundHoldings.sql
 
-echo "Database successfully created at location $edgar_db"
+echo "Database successfully created at location $edgar_db. Ready for seeding."
 
-bash scripts/seed_edgar_ciks.sh
