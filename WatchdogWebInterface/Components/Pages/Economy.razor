@@ -1,7 +1,5 @@
 @page "/economy"
 @attribute [Authorize]
-@using System.ComponentModel
-@using System.Globalization
 
 <RadzenStack Orientation="Orientation.Vertical">
     <h1>Economy</h1>
@@ -31,9 +29,9 @@
     <RadzenStack Orientation="Orientation.Horizontal" Gap="0.2rem" Style="max-width: 200px;">
         @foreach (string series in selectedTimeSeries)
         {
-                                    <RadzenBadge Text="@series"
-                                        IsPill="true"
-                                    />
+            <RadzenBadge Text="@series"
+                IsPill="true"
+            />
         }
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
