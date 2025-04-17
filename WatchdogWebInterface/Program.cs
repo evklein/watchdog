@@ -20,6 +20,7 @@ builder.Services.AddHttpsRedirection(options =>
 
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<IEdgarRepository, EdgarRepository>();
+builder.Services.AddScoped<ITradeRepository, TradeRepository>();
 
 builder.Services.Configure<ConnectionStringOptions>(
     builder.Configuration.GetSection("ConnectionStrings")

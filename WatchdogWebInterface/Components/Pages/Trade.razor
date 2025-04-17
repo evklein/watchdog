@@ -1,0 +1,123 @@
+@page "/trade"
+@attribute [Authorize]
+@inject ITradeRepository TradeRepository
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
+    <h1>United States Trade</h1>
+    <p>Understand Fund make-up and holding changes over time</p>
+    <RadzenTabs RenderMode="TabRenderMode.Client">
+        <Tabs>
+            <RadzenTabsItem Icon="package_2" Text="Imports">
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
+                    <RadzenLabel Component="EndUse" Text="Import End Use" />
+                    <RadzenDropDown Multiple="false"
+                        TValue="int"
+                        Data="_endCodeTypes"
+                        TextProperty="Value"
+                        ValueProperty="Key"
+                        Chips="true"
+                        Name="EndUse"
+                        @bind-Value="_selectedEndUseCode"
+                        Change="@(args => SelectEndUseCode())"
+                    />
+
+                    <RadzenLabel Component="Countries" Text="Import Location" />
+                    <RadzenDropDown Multiple="false"
+                        Data="_countries"
+                        TextProperty="Value"
+                        ValueProperty="Key"
+                        Chips="true"
+                        @bind-Value="_selectedCountryCode"
+                        Name="Countries"
+                        Change="@(args => SelectCountryCode())"
+                    />
+                    <RadzenButton ButtonStyle="ButtonStyle.Success"
+                        Text="Pin Series"
+                        Icon="keep"
+                        Click="PinCurrentSeries"
+                    />
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Vertical">
+                        <RadzenChart Style="width: 100%; height: 500px;">
+                            <RadzenChartTooltipOptions Shared="true" />
+                            @if (_newTimeSeries is not null)
+                            {
+                                <RadzenLineSeries Data="@_newTimeSeries"
+                                    CategoryProperty="@nameof(ImportRecord.ComputedDate)"
+                                    Title="Imports"
+                                    LineType="LineType.Dashed"
+                                    ValueProperty="@nameof(ImportRecord.ValueForMonth)"
+                                >
+                                    <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                                </RadzenLineSeries>
+                            }
+                            @foreach (var recordLists in _importRecordsForSelections)
+                            {
+                                <RadzenLineSeries Data="@recordLists"
+                                    CategoryProperty="@nameof(ImportRecord.ComputedDate)"
+                                    Title="Imports"
+                                    LineType="LineType.Solid"
+                                    ValueProperty="@nameof(ImportRecord.ValueForMonth)"
+                                >
+                                    <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                                </RadzenLineSeries>
+                            }
+                            <RadzenCategoryAxis Padding="20" />
+                            <RadzenValueAxis Formatter="@FormatAsUSD">
+                                <RadzenGridLines Visible="true" />
+                                <RadzenAxisTitle Text="Value in USD" />
+                            </RadzenValueAxis>
+                        </RadzenChart>
+
+                </RadzenStack>
+            </RadzenTabsItem>
+            <RadzenTabsItem Icon="send" Text="Exports">
+
+            </RadzenTabsItem>
+        </Tabs>
+    </RadzenTabs>
+</RadzenStack>
+
+@code {
+    private Dictionary<int, string> _endCodeTypes = new();
+    private Dictionary<string, string> _countries = new();
+    private List<List<ImportRecord>> _importRecordsForSelections = new();
+
+    private string _selectedCountryCode = string.Empty;
+    private int _selectedEndUseCode;
+    private List<ImportRecord> _newTimeSeries;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _endCodeTypes = await TradeRepository.LoadImportEndUseTypes();
+        _countries = await TradeRepository.LoadImportCountries();
+    }
+
+    private async Task SelectEndUseCode()
+    {
+        if (!string.IsNullOrEmpty(_selectedCountryCode))
+        {
+            await FetchNewTimeSeries();
+        }
+    }
+
+    private async Task SelectCountryCode()
+    {
+        await FetchNewTimeSeries();
+    }
+
+    private async Task FetchNewTimeSeries()
+    {
+        _newTimeSeries = await TradeRepository.LoadImportRecordsForEndUseCode(_selectedEndUseCode, _selectedCountryCode);
+    }
+
+    private void PinCurrentSeries()
+    {
+        _importRecordsForSelections.Add(_newTimeSeries);
+    }
+
+    private string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+}
