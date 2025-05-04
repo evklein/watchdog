@@ -5,9 +5,11 @@ import datetime
 from requests.exceptions import ConnectionError
 
 TRADE_DB_CONNECTION_STRING = os.path.expanduser(os.environ.get('WATCHDOG_TRADE_DB_LOC'))
+FETCH_DB_CONNECTION_STRING = os.path.expanduser(os.environ.get('WATCHDOG_FETCH_DB_LOC'))
+
 CENSUS_API_KEY = os.environ.get('WATCHDOG_CENSUS_API_KEY')
 
-def FetchImportsForMonth(sql_connection, cursor, month, year):
+def FetchImportsForMonth(sql_connection, cursor, month, year, fetch_sql_connection, fetch_cursor):
     pad_month = f'{month}'.rjust(2, '0')
     print(f'Fetching import record for {pad_month}-{year}')
     req_url = f'https://api.census.gov/data/timeseries/intltrade/imports/enduse?get=CTY_CODE,CTY_NAME,I_ENDUSE,I_ENDUSE_LDESC,GEN_VAL_MO,CON_VAL_MO&time={year}-{pad_month}&key={CENSUS_API_KEY}'
@@ -41,10 +43,16 @@ def FetchImportsForMonth(sql_connection, cursor, month, year):
     cursor.execute(query)
     sql_connection.commit()
 
+    fetch_query = f'INSERT INTO FetchRecords(Source, Destination, NewRecordsAdded, OperationRan) VALUES (\'Census API (Imports) {pad_month}-{year}\', \'Trade Database - Imports Table\', {len(data)}, \'{datetime.datetime.now()}\');'
+    fetch_cursor.execute(fetch_query)
+    fetch_sql_connection.commit()
+
 if __name__ == "__main__":
     print('Fetching and loading imports!')
     sql_connection = sqlite3.connect(TRADE_DB_CONNECTION_STRING)
+    fetch_sql_connection = sqlite3.connect(FETCH_DB_CONNECTION_STRING)
     cursor = sql_connection.cursor()
+    fetch_cursor = fetch_sql_connection.cursor()
     now = datetime.datetime.now()
 
     # Fetch for each month
@@ -52,5 +60,4 @@ if __name__ == "__main__":
           for j in range(1, 13):
               if i == now.year and j == now.month:
                   break
-              FetchImportsForMonth(sql_connection, cursor, j, i)
-              
+              FetchImportsForMonth(sql_connection, cursor, j, i, fetch_sql_connection, fetch_cursor) 
