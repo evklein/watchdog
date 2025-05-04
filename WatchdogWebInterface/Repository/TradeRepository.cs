@@ -1,11 +1,18 @@
+using System.Composition;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
+using WatchdogWebInterface.Models;
+using WatchdogWebInterface.Models.DTO;
 
 public interface ITradeRepository
 {
     Task<Dictionary<int, string>> LoadImportEndUseTypes();
     Task<Dictionary<string, string>> LoadImportCountries();
     Task<List<ImportRecord>> LoadImportRecordsForEndUseCode(int endUseCode, string countryCode);
+    Task<List<ImportItemDTO>> LoadTop10Imports();
+    Task<List<ImporterDTO>> LoadTop10Importers();
+    Task<List<ExportItemDTO>> LoadTop10Exports();
+    Task<List<ExportRecord>> FetchTotalExportsAll();
 }
 
 public class TradeRepository : ITradeRepository
@@ -19,7 +26,7 @@ public class TradeRepository : ITradeRepository
 
     public async Task<Dictionary<int, string>> LoadImportEndUseTypes()
     {
-        string query = "SELECT EndUseCode, EndUseDescription FROM ImportRecords GROUP BY EndUseCode;";
+        string query = "SELECT EndUseCode, EndUseDescription FROM ImportRecords GROUP BY EndUseCode ORDER BY EndUseDescription ASC;";
         Dictionary<int, string> endUseTypes = new();
         using (var connection = new SqliteConnection(_connectionStringOptions.TradeDbConnection))
         {
@@ -38,6 +45,64 @@ public class TradeRepository : ITradeRepository
             }
         }
         return endUseTypes;
+    }
+
+    public async Task<List<ImportItemDTO>> LoadTop10Imports()
+    {
+        string query = "SELECT EndUseCode, EndUseDescription, SUM(ValueForMonth) FROM ImportRecords GROUP BY EndUseDescription ORDER BY SUM(ValueForMonth) DESC LIMIT 10 OFFSET 1;";
+        List<ImportItemDTO> top10ImportsByCode = new();
+        using (var connection = new SqliteConnection(_connectionStringOptions.TradeDbConnection))
+        {
+            connection.Open();
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        int endUseCode = reader.IsDBNull(0) ? -1 : reader.GetInt32(0);
+                        string endUseDescription = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                        long totalValueSince2013 = reader.IsDBNull(2) ? -1 : reader.GetInt64(2);
+                        top10ImportsByCode.Add(new ImportItemDTO
+                        {
+                            EndUseCode = endUseCode,
+                            EndUseDescription = endUseDescription,
+                            TotalImportValueForPeriod = totalValueSince2013
+                        });
+                    }
+                }
+            }
+        }
+        return top10ImportsByCode;
+    }
+
+    public async Task<List<ImporterDTO>> LoadTop10Importers()
+    {
+        string query = "SELECT CountryCode, CountryName, SUM(ValueForMonth) FROM ImportRecords GROUP BY CountryCode ORDER BY SUM(ValueForMonth) DESC LIMIT 10 OFFSET 1;";
+        List<ImporterDTO> top10Importers = new();
+        using (var connection = new SqliteConnection(_connectionStringOptions.TradeDbConnection))
+        {
+            connection.Open();
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        string countryCode = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                        string countryName = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                        long totalValueSince2013 = reader.IsDBNull(2) ? -1 : reader.GetInt64(2);
+                        top10Importers.Add(new ImporterDTO
+                        {
+                            CountryCode = countryCode,
+                            CountryName = countryName,
+                            TotalValueImportedFromForPeriod = totalValueSince2013
+                        });
+                    }
+                }
+            }
+        }
+        return top10Importers;
     }
 
     public async Task<Dictionary<string, string>> LoadImportCountries()
@@ -93,5 +158,74 @@ public class TradeRepository : ITradeRepository
             }
         }
         return records;
+    }
+
+
+    public async Task<List<ExportItemDTO>> LoadTop10Exports()
+    {
+        string query = "SELECT CommodityId, CommodityDescription, SUM(TotalValueForMonth) FROM ExportRecords GROUP BY CommodityId ORDER BY SUM(TotalValueForMonth) DESC LIMIT 10 OFFSET 1;";
+        List<ExportItemDTO> top10ExportsByCode = new();
+        using (var connection = new SqliteConnection(_connectionStringOptions.TradeDbConnection))
+        {
+            connection.Open();
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        string commodityId = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                        string commodityDescription = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                        long totalValueSince2013 = reader.IsDBNull(2) ? -1 : reader.GetInt64(2);
+                        top10ExportsByCode.Add(new ExportItemDTO
+                        {
+                            CommodityId = commodityId,
+                            CommodityName = commodityDescription,
+                            TotalValueExportedForPeriod = totalValueSince2013
+                        });
+                    }
+                }
+            }
+        }
+        return top10ExportsByCode;
+    }
+
+    public async Task<List<ExportRecord>> FetchTotalExportsAll()
+    {
+        string query = "SELECT * FROM ExportRecords WHERE CommodityID = '-';";
+        List<ExportRecord> exportRecords = new List<ExportRecord>();
+        using (var connection = new SqliteConnection(_connectionStringOptions.TradeDbConnection))
+        {
+            connection.Open();
+            using (var command = new SqliteCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        string commodityId = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                        string commodityDescription = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                        long totalValueForMonth = reader.IsDBNull(3) ? -1 : reader.GetInt64(3);
+                        long totalVesselValueForMonth = reader.IsDBNull(4) ? -1 : reader.GetInt64(4);
+                        long totalAirValueForMonth = reader.IsDBNull(5) ? -1 : reader.GetInt64(5);
+                        long totalCardCountForMonth = reader.IsDBNull(6) ? -1 : reader.GetInt64(6);
+                        int month = reader.IsDBNull(7) ? -1 : reader.GetInt32(7);
+                        int year = reader.IsDBNull(8) ? -1 : reader.GetInt32(8);
+                        exportRecords.Add(new ExportRecord
+                        {
+                            CommodityId = commodityId,
+                            CommodityDescription = commodityDescription,
+                            TotalValueForMonth = totalValueForMonth,
+                            VesselValueForMonth = totalVesselValueForMonth,
+                            AirValueForMonth = totalAirValueForMonth,
+                            CardCount = totalCardCountForMonth,
+                            Month = month,
+                            Year = year
+                        });
+                    }
+                }
+            }
+        }
+        return exportRecords;
     }
 }

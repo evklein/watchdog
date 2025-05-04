@@ -1,26 +1,53 @@
 @page "/pipelines"
 @attribute [Authorize]
+@inject IPipelineRepository PipelineRepository
 
 <RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
     <RadzenStack Orientation="Orientation.Vertical">
         <h1>Pipeline Statuses</h1>
         <RadzenStack Orientation="Orientation.Horizontal">
             <p>Results for all ETL pipeline runs.</p>
-            <RadzenDropDown Data="_importSources"
-                TValue="string"
+            <RadzenDropDown Data="_importDestinations"
+                @bind-Value=_selectedDestination
+                Change="ChangePipelineSelection"
             />
         </RadzenStack>
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Vertical">
-
+        @foreach (FetchRecord record in _fetchRecordsForSelectedDestination)
+        {
+            <RadzenCard>
+                <RadzenStack Orientation="Orientation.Horizontal">
+                    <RadzenIcon Style="font-size: 30px;" Icon="add" IconColor="@Colors.Primary"></RadzenIcon>
+                    <p style="margin-top: 8px;"><b>@record.NewRecordsAdded</b> new records added to <b>@record.Destination</b></p>
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal">
+                    <RadzenIcon Style="font-size: 30px;" Icon="source"></RadzenIcon>
+                    <p style="margin-top: 8px;">@record.Source</p>
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Horizontal">
+                    <RadzenIcon Style="font-size: 30px;" Icon="history"></RadzenIcon>
+                    <p style="margin-top: 8px;">@record.OperationRan</p>
+                </RadzenStack>
+            </RadzenCard>
+        }
     </RadzenStack>
 </RadzenStack>
 
 @code {
-    private List<string> _importSources = new();
+    private List<string> _importDestinations = new();
+    private string _selectedDestination = string.Empty;
+    private List<FetchRecord> _fetchRecordsForSelectedDestination = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        
+        _importDestinations = PipelineRepository.LoadDestinations();
+        _selectedDestination = _importDestinations.First();
+        _fetchRecordsForSelectedDestination = PipelineRepository.LoadFetchRecordsForDestination(_selectedDestination);
+    }
+
+    private void ChangePipelineSelection()
+    {
+        _fetchRecordsForSelectedDestination = PipelineRepository.LoadFetchRecordsForDestination(_selectedDestination);
     }
 }

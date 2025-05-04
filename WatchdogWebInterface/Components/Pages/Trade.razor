@@ -8,71 +8,166 @@
     <RadzenTabs RenderMode="TabRenderMode.Client">
         <Tabs>
             <RadzenTabsItem Icon="package_2" Text="Imports">
-                <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
-                    <RadzenLabel Component="EndUse" Text="Import End Use" />
-                    <RadzenDropDown Multiple="false"
-                        TValue="int"
-                        Data="_endCodeTypes"
-                        TextProperty="Value"
-                        ValueProperty="Key"
-                        Chips="true"
-                        Name="EndUse"
-                        @bind-Value="_selectedEndUseCode"
-                        Change="@(args => SelectEndUseCode())"
-                    />
+                <RadzenCard Style="margin: .5rem">
+                    <RadzenStack Orientation="Orientation.Vertical" Gap="0rem">
+                        <h5>Top 10 Most Imported Items</h5>
+                        <RadzenDataGrid Data="_top10ImportsAllTime">
+                            <Columns>
+                                <RadzenDataGridColumn Property="@nameof(ImportItemDTO.EndUseCode)"
+                                    Title="End Use Code"
+                                    Width="100px"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(ImportItemDTO.EndUseDescription)"
+                                    Title="End Use Description"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(ImportItemDTO.TotalImportValueForPeriod)"
+                                    Title="Total Imported Value (Since 2013)"
+                                    FormatString="${0:N2}"
+                                />
+                            </Columns>
+                        </RadzenDataGrid>
+                    </RadzenStack>
+                </RadzenCard>
+                <RadzenCard Style="margin: .5rem">
+                    <RadzenStack Orientation="Orientation.Vertical" Gap="0rem">
+                        <h5>Top 10 Most Imported-From Entities</h5>
+                        <RadzenDataGrid Data="_top10ImportersAllTime">
+                            <Columns>
+                                <RadzenDataGridColumn Property="@nameof(ImporterDTO.CountryCode)"
+                                    Title="Country Code"
+                                    Width="100px"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(ImporterDTO.CountryName)"
+                                    Title="Entity Name"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(ImporterDTO.TotalValueImportedFromForPeriod)"
+                                    Title="Total Imported Value (Since 2013)"
+                                    FormatString="${0:N2}"
+                                />
+                            </Columns>
+                        </RadzenDataGrid>
+                    </RadzenStack>
+                </RadzenCard>
+                <RadzenCard Style="margin: .5rem">
+                    <h5>Import Sandbox</h5>
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
+                        <RadzenLabel Component="EndUse" Text="Import End Use" />
+                        <RadzenDropDown Multiple="false"
+                            TValue="int"
+                            Data="_endCodeTypes"
+                            TextProperty="Value"
+                            ValueProperty="Key"
+                            Chips="true"
+                            Name="EndUse"
+                            @bind-Value="_selectedEndUseCode"
+                            Change="@(args => SelectEndUseCode())"
+                        />
 
-                    <RadzenLabel Component="Countries" Text="Import Location" />
-                    <RadzenDropDown Multiple="false"
-                        Data="_countries"
-                        TextProperty="Value"
-                        ValueProperty="Key"
-                        Chips="true"
-                        @bind-Value="_selectedCountryCode"
-                        Name="Countries"
-                        Change="@(args => SelectCountryCode())"
-                    />
-                    <RadzenButton ButtonStyle="ButtonStyle.Success"
-                        Text="Pin Series"
-                        Icon="keep"
-                        Click="PinCurrentSeries"
-                    />
-                </RadzenStack>
-                <RadzenStack Orientation="Orientation.Vertical">
+                        <RadzenLabel Component="Countries" Text="Import Location" />
+                        <RadzenDropDown Multiple="false"
+                            Data="_countries"
+                            TextProperty="Value"
+                            ValueProperty="Key"
+                            Chips="true"
+                            @bind-Value="_selectedCountryCode"
+                            Name="Countries"
+                            Change="@(args => SelectCountryCode())"
+                        />
+                        <RadzenButton ButtonStyle="ButtonStyle.Success"
+                            Text="Pin Series"
+                            Icon="keep"
+                            Click="PinCurrentSeries"
+                        />
+                    </RadzenStack>
+                    <RadzenStack Orientation="Orientation.Vertical">
+                            <RadzenChart Style="width: 100%; height: 500px;">
+                                <RadzenChartTooltipOptions Shared="true" />
+                                @if (_newTimeSeries is not null)
+                                {
+                                    <RadzenLineSeries Data="@_newTimeSeries"
+                                        CategoryProperty="@nameof(ImportRecord.ComputedDate)"
+                                        Title="@($"{_newTimeSeries.First().CountryName} / {_newTimeSeries.First().EndUseDescription}")"
+                                        LineType="LineType.Dashed"
+                                        ValueProperty="@nameof(ImportRecord.ValueForMonth)"
+                                    >
+                                        <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                                    </RadzenLineSeries>
+                                }
+                                @foreach (var recordLists in _importRecordsForSelections)
+                                {
+                                    <RadzenLineSeries Data="@recordLists"
+                                        CategoryProperty="@nameof(ImportRecord.ComputedDate)"
+                                        Title="@($"{recordLists.First().CountryName} / {recordLists.First().EndUseDescription}")"
+                                        LineType="LineType.Solid"
+                                        ValueProperty="@nameof(ImportRecord.ValueForMonth)"
+                                    >
+                                        <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                                    </RadzenLineSeries>
+                                }
+                                <RadzenCategoryAxis Padding="20" />
+                                <RadzenValueAxis Formatter="@FormatAsUSD">
+                                    <RadzenGridLines Visible="true" />
+                                    <RadzenAxisTitle Text="Value in USD" />
+                                </RadzenValueAxis>
+                            </RadzenChart>
+
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenTabsItem>
+            <RadzenTabsItem Icon="send" Text="Exports">
+                <RadzenCard Style="margin: .5rem">
+                    <RadzenStack Orientation="Orientation.Vertical" Gap="0rem">
+                        <h5>Top 10 Most Exported Items</h5>
+                        <RadzenDataGrid Data="_top10ExportsAllTime">
+                            <Columns>
+                                <RadzenDataGridColumn Property="@nameof(ExportItemDTO.CommodityId)"
+                                    Title="Commodity ID"
+                                    Width="100px"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(ExportItemDTO.CommodityName)"
+                                    Title="Commodity Name"
+                                />
+                                <RadzenDataGridColumn Property="@nameof(ExportItemDTO.TotalValueExportedForPeriod)"
+                                    Title="Total Exported Value (Since 2013)"
+                                    FormatString="${0:N2}"
+                                />
+                            </Columns>
+                        </RadzenDataGrid>
+                    </RadzenStack>
+                </RadzenCard>
+                <RadzenCard Style="margin: .5rem">
+                    <h5>US Exports - Total</h5>
+                    <RadzenStack Orientation="Orientation.Vertical">
                         <RadzenChart Style="width: 100%; height: 500px;">
-                            <RadzenChartTooltipOptions Shared="true" />
-                            @if (_newTimeSeries is not null)
-                            {
-                                <RadzenLineSeries Data="@_newTimeSeries"
-                                    CategoryProperty="@nameof(ImportRecord.ComputedDate)"
-                                    Title="Imports"
-                                    LineType="LineType.Dashed"
-                                    ValueProperty="@nameof(ImportRecord.ValueForMonth)"
-                                >
-                                    <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
-                                </RadzenLineSeries>
-                            }
-                            @foreach (var recordLists in _importRecordsForSelections)
-                            {
-                                <RadzenLineSeries Data="@recordLists"
-                                    CategoryProperty="@nameof(ImportRecord.ComputedDate)"
-                                    Title="Imports"
-                                    LineType="LineType.Solid"
-                                    ValueProperty="@nameof(ImportRecord.ValueForMonth)"
-                                >
-                                    <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
-                                </RadzenLineSeries>
-                            }
+                            <RadzenLineSeries Data="@_totalExportData"
+                                CategoryProperty="@nameof(ExportRecord.ComputedDate)"
+                                Title="Total Exports Value"
+                                LineType="LineType.Solid"
+                                ValueProperty="@nameof(ExportRecord.TotalValueForMonth)">
+                                <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                            </RadzenLineSeries>
+                            <RadzenLineSeries Data="@_totalExportData"
+                                CategoryProperty="@nameof(ExportRecord.ComputedDate)"
+                                Title="Total Vessel Value"
+                                LineType="LineType.Solid"
+                                ValueProperty="@nameof(ExportRecord.VesselValueForMonth)">
+                                <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                            </RadzenLineSeries>
+                            <RadzenLineSeries Data="@_totalExportData"
+                                CategoryProperty="@nameof(ExportRecord.ComputedDate)"
+                                Title="Total Air Value"
+                                LineType="LineType.Solid"
+                                ValueProperty="@nameof(ExportRecord.AirValueForMonth)">
+                                <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                            </RadzenLineSeries>
                             <RadzenCategoryAxis Padding="20" />
                             <RadzenValueAxis Formatter="@FormatAsUSD">
                                 <RadzenGridLines Visible="true" />
                                 <RadzenAxisTitle Text="Value in USD" />
                             </RadzenValueAxis>
                         </RadzenChart>
-
-                </RadzenStack>
-            </RadzenTabsItem>
-            <RadzenTabsItem Icon="send" Text="Exports">
-
+                    </RadzenStack>
+                </RadzenCard>
             </RadzenTabsItem>
         </Tabs>
     </RadzenTabs>
@@ -86,11 +181,20 @@
     private string _selectedCountryCode = string.Empty;
     private int _selectedEndUseCode;
     private List<ImportRecord> _newTimeSeries;
+    private List<ImportItemDTO> _top10ImportsAllTime = new();
+    private List<ImporterDTO> _top10ImportersAllTime = new();
+    private List<ExportItemDTO> _top10ExportsAllTime = new();
+    private List<ExportRecord> _totalExportData = new();
 
     protected override async Task OnInitializedAsync()
     {
         _endCodeTypes = await TradeRepository.LoadImportEndUseTypes();
         _countries = await TradeRepository.LoadImportCountries();
+
+        _top10ImportsAllTime = await TradeRepository.LoadTop10Imports();
+        _top10ImportersAllTime = await TradeRepository.LoadTop10Importers();
+        _top10ExportsAllTime = await TradeRepository.LoadTop10Exports();
+        _totalExportData = await TradeRepository.FetchTotalExportsAll();
     }
 
     private async Task SelectEndUseCode()

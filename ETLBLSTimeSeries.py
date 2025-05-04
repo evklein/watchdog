@@ -74,6 +74,6 @@ if __name__ == "__main__":
             query += ';'
             cursor.execute(query)
             sql_connection.commit()
-            fetch_cursor.execute('INSERT INTO FetchRecords(Source, Destination, NewRecordsAdded, OperationRan) VALUES (\'BLS Time Series - {series_title}\', \'BLS Database\', \'{len(data_by_period)}\', \'{datetime.datetime.now()}\');')
+            fetch_cursor.execute(f'INSERT INTO FetchRecords(Source, Destination, NewRecordsAdded, OperationRan) VALUES (\'BLS Time Series - {series_title}\', \'BLS Database\', \'{len(data_by_period)}\', \'{datetime.datetime.now()}\');')
             fetch_connection.commit()
 
