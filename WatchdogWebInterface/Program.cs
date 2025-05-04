@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using WatchdogWebInterface.Areas.Identity.Data;
 using Radzen;
 using static Microsoft.AspNetCore.Http.StatusCodes;
-using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WatchdogWebInterfaceIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'WatchdogWebInterfaceIdentityDbContextConnection' not found."); ;

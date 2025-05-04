@@ -156,6 +156,7 @@ public class EdgarRepository : IEdgarRepository
                     {
                         FundHolding holding = new();
 
+                        Console.WriteLine("Error happens here?");
                         // Safe way to get string values that might be NULL
                         holding.HoldingId = reader.IsDBNull(reader.GetOrdinal("HoldingId")) ? null : reader.GetString(reader.GetOrdinal("HoldingId"));
                         holding.LEI = reader.IsDBNull(reader.GetOrdinal("LEI")) ? null : reader.GetString(reader.GetOrdinal("LEI"));
@@ -167,6 +168,7 @@ public class EdgarRepository : IEdgarRepository
                         holding.AssetCategory = reader.IsDBNull(reader.GetOrdinal("AssetCategory")) ? null : reader.GetString(reader.GetOrdinal("AssetCategory"));
                         holding.NPORTFilingId = reader.IsDBNull(reader.GetOrdinal("NPORTFilingId")) ? null : reader.GetString(reader.GetOrdinal("NPORTFilingId"));
                         holdings.Add(holding);
+                        Console.WriteLine("Nope");
                     }
                 }
             }
