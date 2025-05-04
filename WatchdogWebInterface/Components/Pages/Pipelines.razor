@@ -1,0 +1,26 @@
+@page "/pipelines"
+@attribute [Authorize]
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
+    <RadzenStack Orientation="Orientation.Vertical">
+        <h1>Pipeline Statuses</h1>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <p>Results for all ETL pipeline runs.</p>
+            <RadzenDropDown Data="_importSources"
+                TValue="string"
+            />
+        </RadzenStack>
+    </RadzenStack>
+    <RadzenStack Orientation="Orientation.Vertical">
+
+    </RadzenStack>
+</RadzenStack>
+
+@code {
+    private List<string> _importSources = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+}
