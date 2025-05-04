@@ -8,13 +8,13 @@
     <p>Welcome to <b><span class="wd-blue">Watch</span><span class="wd-red">dog</span></b>, a financial analytics tool. Use this page to navigate to different parts of the application.</p>
     <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
         <RadzenCard Style="width: 33.333%">
-            <h3><i class="fa-solid fa-money-bill-wave"></i>&nbsp;&nbsp;Economy</h3>
+            <h3><i class="fa-solid fa-earth-americas"></i>&nbsp;&nbsp;US Trade</h3>
             <p>
-                View financial indices, economic health indicators, and other statistics.
+                View United States economic trade data and patterns.
             </p>
-            <div>
-                <a class="card-link" href="/economy">
-                    <span>Go to <b>Economy</b></span>
+            <div class="card-link-container">
+                <a class="card-link" href="/trade">
+                    <span>Go to <b>Trade</b></span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -22,9 +22,9 @@
         <RadzenCard Style="width: 33.333%">
             <h3><i class="fa-solid fa-money-bill-trend-up"></i>&nbsp;&nbsp;Funds</h3>
             <p>
-                Use public data to understand fund structures, holdings, and changes over time.
+                Use public data to understand mutual fund structures, holdings, and changes over time.
             </p>
-            <div>
+            <div class="card-link-container">
                 <a class="card-link" href="/funds">
                     <span>Go to <b>Funds</b></span>
                     <i class="fa-solid fa-arrow-right"></i>
@@ -32,13 +32,25 @@
             </div>
         </RadzenCard>
         <RadzenCard Style="width: 33.333%">
-            <h3><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Housing</h3>
+            <h3><i class="fa-solid fa-chart-line"></i>&nbsp;&nbsp;Economic Time Series</h3>
             <p>
-                Parse housing markets across the country.
+                View economic indicators and time series data provided by the Bureau of Labor Statistics.
             </p>
-            <div>
-                <a class="card-link" href="/housing">
-                    <span>Go to <b>Housing</b></span>
+            <div class="card-link-container">
+                <a class="card-link" href="/time-series">
+                    <span>Go to <b>Time Series</b></span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </RadzenCard>
+        <RadzenCard Style="width: 33.333%">
+            <h3><i class="fa-solid fa-project-diagram"></i>&nbsp;&nbsp;Pipelines</h3>
+            <p>
+                Examine data pipeline results.
+            </p>
+            <div class="card-link-container">
+                <a class="card-link" href="/pipelines">
+                    <span>Go to <b>Pipelines</b></span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>

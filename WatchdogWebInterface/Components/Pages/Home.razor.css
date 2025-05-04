@@ -1,3 +1,7 @@
+.card-link-container {
+    position: relative;
+}
+
 .card-link {
     float: right;
     text-decoration: none;

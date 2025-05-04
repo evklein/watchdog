@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
+using WatchdogWebInterface.Models;
 
 public interface IEdgarRepository
 {

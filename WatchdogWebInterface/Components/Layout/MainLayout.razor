@@ -23,17 +23,21 @@
     </RadzenHeader>
     <RadzenSidebar @bind-Expanded="@sidebar1Expanded" Style="background-color: #fff;">
         <RadzenPanelMenu>
-            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/economy"))">
-                <i class="navbar-item-icon fa-solid fa-money-bill-wave"></i>
-                <span>Economy</span>          
+            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/trade"))">
+                <i class="navbar-item-icon fa-solid fa-globe-americas"></i>
+                <span>Trade</span>          
             </div>
             <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/funds"))">
                 <i class="navbar-item-icon fa-solid fa-money-bill-trend-up"></i>
                 <span>Funds</span>          
             </div>
-            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/housing"))">
-                <i class="navbar-item-icon fa-solid fa-house"></i>
-                <span>Housing</span>
+            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/time-series"))">
+                <i class="navbar-item-icon fa-solid fa-chart-line"></i>
+                <span>Time Series</span>
+            </div>
+            <div class="navbar-item" @onclick="@(() => NavigationManager.NavigateTo("/pipelines"))">
+                <i class="navbar-item-icon fa-solid fa-project-diagram"></i>
+                <span>Pipeline Status</span>
             </div>
         </RadzenPanelMenu>
     </RadzenSidebar>
