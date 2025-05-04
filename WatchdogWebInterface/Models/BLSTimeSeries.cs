@@ -1,6 +1,6 @@
 namespace WatchdogWebInterface.Models;
 
-public class TimeSeries
+public class BLSTimeSeries
 {
     public string SeriesId { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;

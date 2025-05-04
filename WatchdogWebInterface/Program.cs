@@ -22,6 +22,7 @@ builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<IEdgarRepository, EdgarRepository>();
 builder.Services.AddScoped<ITradeRepository, TradeRepository>();
 builder.Services.AddScoped<IPipelineRepository, PipelineRepository>();
+builder.Services.AddScoped<IBLSRepository, BLSRepository>();
 
 builder.Services.Configure<ConnectionStringOptions>(
     builder.Configuration.GetSection("ConnectionStrings")

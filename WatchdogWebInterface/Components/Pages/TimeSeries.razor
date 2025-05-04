@@ -1,0 +1,105 @@
+@page "/time-series"
+@attribute [Authorize]
+@inject IBLSRepository BLSRepository
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem">
+    <h1>Time Series Data</h1>
+    <p>Time series scraped from the Bureau of Labor Statistics API. Useful for monitoring pricing indices and other indicatorss of overall U.S. health.</p>
+    <RadzenCard Style="margin: .5rem">
+        <h5>Time Series Sandbox</h5>
+        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
+            <RadzenLabel Component="Surveys" Text="Surveys" />
+            <RadzenDropDown Multiple="false"
+                Data="_surveyOptions"
+                TextProperty="@nameof(BLSSurveyDTO.SurveyName)"
+                ValueProperty="@nameof(BLSSurveyDTO.SurveyAbbreviation)"
+                Chips="true"
+                Name="Surveys"
+                @bind-Value="_selectedSurveyAbbreviation"
+                Change="@(args => SelectSurvey())"
+            />
+            <RadzenLabel Component="Series" Text="Time Series" />
+            <RadzenDropDown Multiple="false"
+                Data="_timeSeriesOptions"
+                TextProperty="@nameof(BLSTimeSeries.Title)"
+                ValueProperty="@nameof(BLSTimeSeries.SeriesId)"
+                Chips="true"
+                Name="Series"
+                @bind-Value="_selectedTimeSeriesId"
+                Change="@(args => SelectTimeSeries())"
+            />
+            <RadzenButton ButtonStyle="ButtonStyle.Success"
+                Text="Pin"
+                Icon="keep"
+                Click="PinCurrentSeries"
+            />
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Vertical">
+                <RadzenChart Style="width: 100%; height: 500px;">
+                    <RadzenChartTooltipOptions Shared="true" />
+                    @if (_newTimeSeries is not null)
+                    {
+                        <RadzenLineSeries Data="@_newTimeSeries"
+                            CategoryProperty="@nameof(BLSTimeSeriesEntry.ComputedDate)"
+                            Title="title"
+                            LineType="LineType.Dashed"
+                            ValueProperty="@nameof(BLSTimeSeriesEntry.Value)"
+                        >
+                            <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                        </RadzenLineSeries>
+                    }
+                    @foreach (var recordLists in _timeSeriesEntriesForSelections)
+                    {
+                        <RadzenLineSeries Data="@recordLists"
+                            CategoryProperty="@nameof(BLSTimeSeriesEntry.ComputedDate)"
+                            Title="Title"
+                            LineType="LineType.Solid"
+                            ValueProperty="@nameof(BLSTimeSeriesEntry.Value)"
+                        >
+                            <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                        </RadzenLineSeries>
+                    }
+                    <RadzenCategoryAxis Padding="20" />
+                    <RadzenValueAxis>
+                        <RadzenGridLines Visible="true" />
+                    </RadzenValueAxis>
+                </RadzenChart>
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<BLSSurveyDTO> _surveyOptions = new();
+    private List<BLSTimeSeries> _timeSeriesOptions = new();
+    private Dictionary<string, string> _countries = new();
+    private List<List<BLSTimeSeriesEntry>> _timeSeriesEntriesForSelections = new();
+
+    private string _selectedSurveyAbbreviation = string.Empty;
+    private string _selectedTimeSeriesId;
+    private List<BLSTimeSeriesEntry> _newTimeSeries;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _surveyOptions = await BLSRepository.LoadSurveyOptions();
+    }
+
+    private async Task SelectSurvey()
+    {
+        _timeSeriesOptions = await BLSRepository.LoadSeriesOptions(_selectedSurveyAbbreviation);
+    }
+
+    private async Task SelectTimeSeries()
+    {
+        await FetchNewTimeSeries();
+    }
+
+    private async Task FetchNewTimeSeries()
+    {
+        _newTimeSeries = await BLSRepository.LoadEntryDataForSeries(_selectedTimeSeriesId);
+    }
+
+    private void PinCurrentSeries()
+    {
+        _timeSeriesEntriesForSelections.Add(_newTimeSeries);
+    }
+}
