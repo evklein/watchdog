@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WatchdogWebInterface.Areas.Identity.Data;
 using Radzen;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WatchdogWebInterfaceIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'WatchdogWebInterfaceIdentityDbContextConnection' not found."); ;
@@ -17,6 +18,7 @@ builder.Services.AddHttpsRedirection(options =>
     options.RedirectStatusCode = Status307TemporaryRedirect;
     options.HttpsPort = 5003;
 });
+
 
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<IEdgarRepository, EdgarRepository>();
@@ -49,6 +51,7 @@ app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
+app.UseStaticFiles();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 app.MapRazorPages();
