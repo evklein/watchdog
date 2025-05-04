@@ -3,8 +3,10 @@ import os
 import sqlite3
 import time
 from bs4 import BeautifulSoup
+import datetime
 
 EDGAR_DB_CONNECTION_STR = os.path.expanduser(os.environ.get('WATCHDOG_EDGAR_DB_LOC'))
+FETCH_DB_CONNECTION_STR = os.path.expanduser(os.environ.get('WATCHDOG_FETCH_DB_LOC'))
 HEADERS = {
     'User-Agent': 'Evan Klein (Indiana University) evklein@iu.edu',
     'Accept': 'application/json',
@@ -26,7 +28,7 @@ def Fetch(req_url, json=False):
     response = requests.get(req_url, headers = HEADERS)
     return response.json() if json == True else response
 
-def ETLEdgarData(sql_connection, cursor):
+def ETLEdgarData(sql_connection, cursor, fetch_sql_connection, fetch_cursor):
     global global_request_failures
 
     ## Get CIKs from database
@@ -50,7 +52,7 @@ def ETLEdgarData(sql_connection, cursor):
             for filing_id in nport_filing_ids:
                 print(f'Importing Filing - {filing_id} for entity {edgar_res["name"]}')
                 try:
-                    ImportFiling(sql_connection, cursor, cik, filing_id)
+                    ImportFiling(sql_connection, cursor, fetch_sql_connection, fetch_cursor, cik, filing_id)
                 except RuntimeError as error:
                     global_request_failures += 1
                     print(f'Error scraping filing for CIK {cik}. Error count added to.')
@@ -79,7 +81,7 @@ def CombRemainingFileIds(edgar_res):
         additional_filing_ids += [filing[0].replace('-', '') for filing in filings if filing[1] == 'NPORT-P']
     return additional_filing_ids
 
-def ImportFiling(sql_connection, cursor, cik, filing_id):
+def ImportFiling(sql_connection, cursor, fetch_sql_connection, fetch_cursor, cik, filing_id):
     req_url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{filing_id}/primary_doc.xml'
     nport_req = requests.get(req_url, headers = HEADERS)
     nport_xml = BeautifulSoup(nport_req.text, 'xml')
@@ -132,14 +134,18 @@ def ImportFiling(sql_connection, cursor, cik, filing_id):
             );'''
         cursor.execute(save_holding_query)
     sql_connection.commit()
+    fetch_cursor.execute(f'INSERT INTO FetchRecords (Source, Destination, NewRecordsAdded, OperationRan) VALUES (\'N-PORT for CIK {cik}\', \'Edgar Database\', {len(holdings)}, \'{datetime.datetime.now()}\');')
+    fetch_sql_connection.commit()
 
 
 if __name__ == "__main__":
     ## Make database connections
     sql_connection = sqlite3.connect(EDGAR_DB_CONNECTION_STR)
     cursor = sql_connection.cursor()
+    fetch_sql_connection = sqlite3.connect(FETCH_DB_CONNECTION_STR)
+    fetch_cursor = fetch_sql_connection.cursor()
 
-    ETLEdgarData(sql_connection, cursor)
+    ETLEdgarData(sql_connection, cursor, fetch_sql_connection, fetch_cursor)
     global_request_count = 0
     global_request_failures = 0
     print(f'ETL for Edgar CIKs complete. {global_request_count} requests to EDGAR made. {global_request_failures} failures detected.')
