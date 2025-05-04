@@ -1,3 +1,5 @@
+namespace WatchdogWebInterface.Models;
+
 public class SeriesClass
 {
     public string CompositeKey { get; set; } = string.Empty;

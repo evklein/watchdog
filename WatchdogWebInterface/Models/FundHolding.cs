@@ -1,3 +1,6 @@
+namespace WatchdogWebInterface.Models;
+
+
 public class FundHolding
 {
     public string HoldingId { get; set; } = string.Empty;

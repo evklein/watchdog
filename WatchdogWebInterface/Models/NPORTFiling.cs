@@ -1,3 +1,5 @@
+namespace WatchdogWebInterface.Models;
+
 public class NPORTFiling
 {
     public string FilingId { get; set; } = string.Empty;

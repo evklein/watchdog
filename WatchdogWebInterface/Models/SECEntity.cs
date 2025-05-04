@@ -1,3 +1,5 @@
+namespace WatchdogWebInterface.Models;
+
 public class SECEntity
 {
     public string CIK { get; set; } = string.Empty;
