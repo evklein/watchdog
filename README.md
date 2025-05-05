@@ -14,7 +14,7 @@ Via data pipelines utilizing these three data sources, a rich dataset of financi
 
 ## Web Interface (Screenshots)
 
-![alt text](image-2.png)
+![alt text](image-4.png)
 ![alt text](image-3.png)
 
 This project was developed for my M.S. in Data Science at Indiana University as part of the curriculum for I535 - Management, Access, and Use of Big Data. All work is my own.
